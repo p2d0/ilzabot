@@ -2,7 +2,7 @@ import requests
 import time
 import responses
 import random
-random.seed(53231)
+random.seed(time.time())
 def find_msg(num):
 	return get_update['result'][len(get_update['result'])-num]['message']['text'].lower().replace('?','').replace('!','')
 
