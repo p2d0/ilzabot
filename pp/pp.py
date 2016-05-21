@@ -5,10 +5,11 @@ import re
 import os
 import requests
 requests.get
-pagecounter = 'https://osu.ppy.sh/p/pp/?m=0&s=3&o=1&f=&page=2'
+pagecounter = 'https://osu.ppy.sh/p/pp/?m=0&s=3&o=1&f=&page='
 top = {}
 text_file = open('C:\\kek.txt',"w")
-for lul in range(1,4):
+
+for lul in range(1,3):
 	print (pagecounter+str(lul))
 	page = urllib.request.urlopen(pagecounter+str(lul))
 	soup = BeautifulSoup(page,'lxml')

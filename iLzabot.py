@@ -2,6 +2,7 @@ import requests
 import time
 import responses
 import random
+from pp2 import pp_calc
 random.seed(time.time())
 def find_msg(num):
 	return get_update['result'][len(get_update['result'])-num]['message']['text'].lower().replace('?','').replace('!','')
@@ -9,7 +10,7 @@ def find_msg(num):
 def send_msg(msg):
 	text = last_message['text']
 	chat_id = get_update['result'][len(get_update['result'])-1]['message']['chat']['id']
-	send_msg = requests.post(get_info('sendMessage'),{'chat_id': chat_id, 'text': msg, 'reply_to_message_id': last_message['message_id']})
+	send_msg = requests.post(get_info('sendMessage'),{'chat_id': chat_id, 'text': msg, 'reply_to_message_id': last_message['message_id'],'parse_mode':'markdown'})
 
 def get_info(method_name):
 	return 'https://api.telegram.org/bot233787808:AAH71m_JtqkQP5ZADD2yxYI2ye8TKTeMnxE/' + method_name
@@ -18,8 +19,14 @@ def post_msg():
 	chat_id = get_update['result'][len(get_update['result'])-1]['message']['chat']['id']
 	text = last_message['text']
 	print(chat_id)
-	
-	if 'нет' in text[len(text)-3:].lower():
+	if '/pp' in text.lower():
+		pp_calc()
+	elif '/help' in text.lower():
+		send_msg('''```
+			list of commands:
+			/pp - посмотреть сколько нафармили боги из топ 50
+			на этом всё```''')
+	elif 'нет' in text[len(text)-3:].lower():
 		print (text[len(text)-3:])
 		rand = [1,1,1]
 		temp = responses.responses_list[random.randint(0,len(responses.responses_list))]
