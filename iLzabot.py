@@ -1,26 +1,34 @@
 import requests
 import time
+from datetime import datetime
 import responses
 import random
 from pp2 import pp_calc
 random.seed(time.time())
 def find_msg(num):
-	return get_update['result'][len(get_update['result'])-num]['message']['text'].lower().replace('?','').replace('!','')
+	print(get_update['result'][len(get_update['result'])-num])
+	last_message = get_last_message();
+	print(last_message)
+	return last_message['text'].lower().replace('?','').replace('!','')
 
 def send_msg(msg):
 	text = last_message['text']
-	chat_id = get_update['result'][len(get_update['result'])-1]['message']['chat']['id']
+	chat_id = get_last_message()['chat']['id']
 	send_msg = requests.post(get_info('sendMessage'),{'chat_id': chat_id, 'text': msg, 'reply_to_message_id': last_message['message_id'],'parse_mode':'markdown'})
 
 def get_info(method_name):
 	return 'https://api.telegram.org/bot233787808:AAH71m_JtqkQP5ZADD2yxYI2ye8TKTeMnxE/' + method_name
 
 def post_msg():
-	chat_id = get_update['result'][len(get_update['result'])-1]['message']['chat']['id']
+	last_message = get_last_message();
+	chat_id = last_message['chat']['id']
 	text = last_message['text']
 	print(chat_id)
 	if '/pp' in text.lower():
 		pp_calc()
+	elif '/ilzadembel' in text.lower():
+		date = datetime(2016,5,22) - datetime.now();
+		send_msg("До возвращения Ильи осталось: " + str(date.days) + " дней  👮")
 	elif '/help' in text.lower():
 		send_msg('''```
 			list of commands:
@@ -34,6 +42,13 @@ def post_msg():
 			temp = responses.responses_list[random.randint(0,len(responses.responses_list))]
 		send_msg(temp)
 		rand[i] = temp
+	elif 'да' in text.lower():
+		print (text[len(text)-3:])
+		temp = responses.da_responses_list[random.randint(0,len(responses.da_responses_list))]
+		send_msg(temp)
+		rand[i] = temp
+	elif 'ржд' in text:
+		send_msg('Я')
 	elif 'https://osu.ppy.sh/ss/' in text:
 		send_msg('Ебнутый')
 	elif find_msg(1) in responses.pizda_list and (find_msg(2) in responses.pizda_list or find_msg(3) in responses.pizda_list): 
@@ -46,7 +61,7 @@ def post_msg():
 		send_msg(' '.join(responses.money_list))
 	elif 'иди нахуй' in find_msg(1):
 		send_msg(responses.hui)
-	elif 'можно' == find_msg(1):
+	elif 'можно' in find_msg(1):
 		send_msg('можно машку за ляжку и козу на возу')
 	elif 'интересно ' in find_msg(1):
 		send_msg('интересно когда в бане тесно') 
@@ -57,7 +72,17 @@ def post_msg():
 i = 0
 id = 0
 get_update = requests.get(get_info('getUpdates')).json()
-last_message = get_update['result'][len(get_update['result'])-1]['message']
+
+def get_last_message():
+	get_update = requests.get(get_info('getUpdates')).json()
+	update = get_update['result'][len(get_update['result'])-1]
+	if('message' in update):
+		return update['message']
+	else:
+		return update['edited_message']
+
+last_message = get_last_message();
+
 while True:
 	if last_message['message_id'] == id:
 		get_update = requests.get(get_info('getUpdates'),{'offset':get_update['result'][len(get_update['result'])-1]['update_id']-2}).json()
