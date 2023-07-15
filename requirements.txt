@@ -5,6 +5,8 @@ pytz
 python-dateutil
 python-telegram-bot
 # logging
+aiohttp_socks
+bs4
 typing
 yt-dlp
 ffmpeg-python
