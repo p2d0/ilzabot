@@ -1,9 +1,15 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p "python3.withPackages(ps: [ ps.requests ps.dateutil ps.beautifulsoup4 ])"
+
 import requests
 import time
 from datetime import datetime
 import responses
 import random
+from dateutil.relativedelta import relativedelta
 from pp2 import pp_calc
+
+
 random.seed(time.time())
 def find_msg(num):
 	print(get_update['result'][len(get_update['result'])-num])
@@ -22,13 +28,20 @@ def get_info(method_name):
 def post_msg():
 	last_message = get_last_message();
 	chat_id = last_message['chat']['id']
+	if("text" not in last_message):
+		return
 	text = last_message['text']
-	print(chat_id)
 	if '/pp' in text.lower():
 		pp_calc()
 	elif '/ilzadembel' in text.lower():
-		date = datetime(2016,5,22) - datetime.now();
-		send_msg("До возвращения Ильи осталось: " + str(date.days) + " дней  👮")
+		date = relativedelta(datetime.now(),datetime(2016,5,22));
+		send_msg("Со времен возвращения илюззии прошло {} лет {} месяцев {} дней 👮".format(date.years,date.months,date.days))
+	elif '/eugenedembel' in text.lower():
+		date = datetime(2022,12,6) - datetime.now();
+		send_msg("До возвращения Жеки осталось: " + str(date.days) + " дней  👮 (+-пару дней)")
+	elif '/pauk' in text.lower():
+		date = datetime(2021,12,18,10,20) - datetime.now();
+		send_msg("До паука осталось: " + str(int(date.seconds/3600)) + " часов " + str(int((date.seconds/60)%60 )) + " минут")
 	elif '/help' in text.lower():
 		send_msg('''```
 			list of commands:
@@ -42,17 +55,20 @@ def post_msg():
 			temp = responses.responses_list[random.randint(0,len(responses.responses_list))]
 		send_msg(temp)
 		rand[i] = temp
-	elif 'да' in text.lower():
-		print (text[len(text)-3:])
+	elif 'да' in text[len(text)-2:].lower():
+		print (text[len(text)-2:])
+		da_used_list = [1,1,1];
 		temp = responses.da_responses_list[random.randint(0,len(responses.da_responses_list))]
+		if temp in da_used_list:
+			temp = responses.da_responses_list[random.randint(0,len(responses.da_responses_list))]
 		send_msg(temp)
-		rand[i] = temp
+		da_used_list[i] = temp
 	elif 'ржд' in text:
 		send_msg('Я')
 	elif 'https://osu.ppy.sh/ss/' in text:
 		send_msg('Ебнутый')
-	elif find_msg(1) in responses.pizda_list and (find_msg(2) in responses.pizda_list or find_msg(3) in responses.pizda_list): 
-		send_msg(' '.join(responses.pizda_list[2:]))  
+	elif find_msg(1) in responses.pizda_list and (find_msg(2) in responses.pizda_list or find_msg(3) in responses.pizda_list):
+		send_msg(' '.join(responses.pizda_list[2:]))
 	elif find_msg(1) in responses.kakay_list[0][0]:
 		send_msg(' '.join(responses.kakay_list[0]))
 	elif find_msg(1) in responses.ruka_list:
@@ -62,13 +78,13 @@ def post_msg():
 	elif 'иди нахуй' in find_msg(1):
 		send_msg(responses.hui)
 	elif 'можно' in find_msg(1):
-		send_msg('можно машку за ляжку и козу на возу')
+		send_msg(responses.mozhno_responses_list[random.randint(0,len(responses.mozhno_responses_list))])
 	elif 'интересно ' in find_msg(1):
-		send_msg('интересно когда в бане тесно') 
+		send_msg('интересно когда в бане тесно')
+	elif '@iLza_bot' in text:
+		send_msg("Спасибо")
 	elif find_msg(1) in responses.zhui_list and responses.zhui_list.index(find_msg(1)) != responses.zhui_list[-1]:
 		send_msg(responses.zhui_list[responses.zhui_list.index(find_msg(1))+1])
-	elif 'кто пидор' in find_msg(1):
-		send_msg('Серега')
 i = 0
 id = 0
 get_update = requests.get(get_info('getUpdates')).json()
@@ -99,4 +115,3 @@ while True:
 	i+=1
 	if i > 2:
 		i = 0
-	
