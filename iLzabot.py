@@ -93,6 +93,7 @@ async def edgegpt(prompt,update: Update) -> None:
     except Exception as e:
         error_msg = f"Ошибка {str(e)}"
         await update.message.reply_text(text=error_msg)
+	raise e
 
 async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
