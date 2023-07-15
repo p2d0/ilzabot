@@ -30,7 +30,7 @@ cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
 
 async def handle_imagegen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_chat_action(ChatAction.UPLOAD_PHOTO, update.message.message_thread_id)
-    async with ImageGenAsyncWithProxy("./new_cookie.json","socks5://localhost:8091",True) as image_generator:
+    async with ImageGenAsyncWithProxy("./new_cookie.json",True) as image_generator:
         try:
             photos = await image_generator.get_images(update.message.text)
             media = [InputMediaPhoto(photo) for photo in photos]
@@ -191,7 +191,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
 
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"proxy": "socks5://localhost:8091","overwrites": True, 'format': '[ext=mp4]'}) as ydl:
+        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': '[ext=mp4]'}) as ydl:
             ydl.download([match.group(0)])
         # Send the video to the chat
         with open('video.mp4', 'rb') as video_file:
@@ -219,9 +219,7 @@ app.add_handler(MessageHandler(filters.TEXT,post_msg))
 app.add_handler(CallbackQueryHandler(button_click))
 async def main():
     global bot;
-    bot = await Chatbot.create(cookies=cookies,
-                     proxy="socks5://localhost:8091"
-                     )
+    bot = await Chatbot.create(cookies=cookies)
 
 try:
     loop = asyncio.get_event_loop()
