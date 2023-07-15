@@ -12,25 +12,25 @@ from dateutil.relativedelta import relativedelta
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.constants import ChatAction, ParseMode
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
-# from gigachad import gigachad_vid
+from gigachad import gigachad_vid
 from telegram.ext import InlineQueryHandler, CallbackQueryHandler
-# from imagegen import ImageGenAsyncWithProxy
+from imagegen import ImageGenAsyncWithProxy
 import logging
 import json
 import sys
 from typing import List
-# from footnote_links import parse_text_with_footnote_links, replace_footnotes_with_html_url, remove_footnotes
-# from summarize import get_transcript
+from footnote_links import parse_text_with_footnote_links, replace_footnotes_with_html_url, remove_footnotes
+from summarize import get_transcript
 import yt_dlp
 # from yt_dlp.postprocessor.ffmpeg import FFmpegExtractAudioPP
 
-logging.basicConfig(filename='./ilzabot.log',level=logging.INFO,format='%(asctime)s %(message)s')
+logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
 cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
 
 
 async def handle_imagegen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_chat_action(ChatAction.UPLOAD_PHOTO, update.message.message_thread_id)
-    async with ImageGenAsyncWithProxy("./new_cookie.json",True) as image_generator:
+    async with ImageGenAsyncWithProxy("./new_cookie.json","socks5://localhost:8093",True) as image_generator:
         try:
             photos = await image_generator.get_images(update.message.text)
             media = [InputMediaPhoto(photo) for photo in photos]
@@ -197,14 +197,14 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         with open('video.mp4', 'rb') as video_file:
             await update.message.reply_video(video=video_file,caption = f"<b>{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
             await update.message.delete()
-    # elif any(link in text for link in ['youtube.com/','youtu.be']):
-    #     text = update.message.text
-    #     link_regex = r'(https?://(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})'
-    #     match = re.search(link_regex, text)
-    #     link = match.group(0);
-    #     transcript = get_transcript(link);
-    #     await bot.reset()
-    #     await edgegpt(f'Summarize yourself the following youtube transcript (output in russian) "{transcript}"',update)
+    elif any(link in text for link in ['youtube.com/','youtu.be']):
+        text = update.message.text
+        link_regex = r'(https?://(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})'
+        match = re.search(link_regex, text)
+        link = match.group(0);
+        transcript = get_transcript(link);
+        await bot.reset()
+        await edgegpt(f'Summarize yourself the following youtube transcript (output in russian) "{transcript}"',update)
 
 
 app.add_handler(CommandHandler("hello", hello))
@@ -219,7 +219,8 @@ app.add_handler(MessageHandler(filters.TEXT,post_msg))
 app.add_handler(CallbackQueryHandler(button_click))
 async def main():
     global bot;
-    bot = await Chatbot.create(cookies=cookies)
+    bot = await Chatbot.create(cookies=cookies
+                     )
 
 try:
     loop = asyncio.get_event_loop()
