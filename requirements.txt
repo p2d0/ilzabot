@@ -1,0 +1,10 @@
+EdgeGPT
+asyncio
+requests
+pytz
+python-dateutil
+python-telegram-bot
+# logging
+typing
+yt-dlp
+ffmpeg-python
