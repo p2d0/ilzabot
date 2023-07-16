@@ -60,6 +60,7 @@ async def edgegpt(prompt,update: Update) -> None:
     try:
         async for final, response in bot.ask_stream(prompt=prompt,conversation_style="creative"):
             if not final:
+                logging.info(response)
                 links = parse_text_with_footnote_links(response)
                 response = remove_footnotes(response)
                 response = replace_footnotes_with_html_url(links,response)
