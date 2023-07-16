@@ -56,7 +56,7 @@ def suggestedResponsesKeyboard(responses):
 
 async def edgegpt(prompt,update: Update) -> None:
     message = None
-    every_20_messages = 0
+    every_30_messages = 0
     try:
         async for final, response in bot.ask_stream(prompt=prompt,conversation_style="creative"):
             if not final:
@@ -67,10 +67,10 @@ async def edgegpt(prompt,update: Update) -> None:
                     if response:
                         message = await update.message.reply_text(text=response, parse_mode = ParseMode.HTML)
                 else:
-                    if every_20_messages % 20 == 0:
+                    if every_30_messages % 30 == 0:
                         if message is not None:  # added check for None
                             await message.edit_text(text=response,parse_mode = ParseMode.HTML)
-                    every_20_messages+=1
+                    every_30_messages+=1
         logging.info(response)
         # logging.info(json.dumps(response))
         last_message = response["item"]["messages"][-1]
