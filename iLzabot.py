@@ -68,6 +68,8 @@ async def edgegpt(prompt,update: Update) -> None:
                     if response:
                         message = await update.message.reply_text(text=response, parse_mode = ParseMode.HTML)
                 else:
+                    if "Searching" in response:
+                        continue;
                     if every_30_messages % 30 == 0:
                         if message is not None:  # added check for None
                             await message.edit_text(text=response,parse_mode = ParseMode.HTML)
