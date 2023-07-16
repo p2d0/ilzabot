@@ -93,7 +93,7 @@ async def edgegpt(prompt,update: Update) -> None:
     except Exception as e:
         error_msg = f"Ошибка {str(e)}"
         await update.message.reply_text(text=error_msg)
-	raise e
+        raise e
 
 async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
@@ -220,8 +220,8 @@ app.add_handler(MessageHandler(filters.TEXT,post_msg))
 app.add_handler(CallbackQueryHandler(button_click))
 async def main():
     global bot;
-    bot = await Chatbot.create(cookies=cookies
-                     )
+    print(cookies)
+    bot = await Chatbot.create(cookies=cookies)
 
 try:
     loop = asyncio.get_event_loop()

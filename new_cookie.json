@@ -11,12 +11,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1720899201,
+        "expirationDate": 1721139107,
         "storeId": null
     },
     {
         "name": "SRCHUSR",
-        "value": "DOB=20230210&T=1689275917000",
+        "value": "DOB=20230210&T=1689515083000&POEX=W",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -26,12 +26,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1752347919,
+        "expirationDate": 1752587085,
         "storeId": null
     },
     {
         "name": "ai_session",
-        "value": "ANtrl8a/gHUKRgcsptzqvh|1689275921683|1689276802180",
+        "value": "DTievFXQ0LpUhOPRGkRXIT|1689516711287|1689516711287",
         "domain": "www.bing.com",
         "hostOnly": true,
         "path": "/",
@@ -41,7 +41,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1689278602,
+        "expirationDate": 1689518511,
         "storeId": null
     },
     {
@@ -56,7 +56,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1689319117,
+        "expirationDate": 1689558283,
         "storeId": null
     },
     {
@@ -76,7 +76,7 @@
     },
     {
         "name": "SRCHHPGUSR",
-        "value": "SRCHLANG=en&BRW=XW&BRH=M&CW=1920&CH=973&SCW=1920&SCH=973&DPR=1.0&UTC=180&DM=1&WTS=63824873600&HV=1689276803&PRVCW=1920&PRVCH=973&EXLTT=31&EXLKNT=1&NRSLT=-1&LSL=0&AS=1&ADLT=OFF&NNT=1&HAP=0&cdxtone=Precise&cdxtoneopts=h3precise,clgalileo,gencontentv3",
+        "value": "SRCHLANG=en&BRW=XW&BRH=M&CW=1920&CH=973&SCW=1920&SCH=2778&DPR=1.0&UTC=180&DM=0&WTS=63825031513&HV=1689516708&PRVCW=1920&PRVCH=942&EXLTT=31&EXLKNT=1&NRSLT=-1&LSL=0&AS=1&ADLT=OFF&NNT=1&HAP=0&cdxtone=Creative&cdxtoneopts=h3imaginative,clgalileo,gencontentv3&IG=322B62141A8949A98825A9D9A2914F1D",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -86,12 +86,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1752348803,
+        "expirationDate": 1752588708,
         "storeId": null
     },
     {
         "name": "ANON",
-        "value": "A=380702115E7BF0ADF775577FFFFFFFFF&E=1c59&W=1",
+        "value": "A=380702115E7BF0ADF775577FFFFFFFFF&E=1c93&W=1",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -101,7 +101,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1703847113,
+        "expirationDate": 1705332416,
         "storeId": null
     },
     {
@@ -131,12 +131,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1720812802,
+        "expirationDate": 1721052711,
         "storeId": null
     },
     {
         "name": "_SS",
-        "value": "SID=19CB7C0FC5CF610F213D6F42C45260AF&R=272&RB=272&GB=0&RG=0&RP=272",
+        "value": "SID=128F0D632D3266230E1D1E332C32672F&R=278&RB=278&GB=0&RG=0&RP=278",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -150,7 +150,7 @@
     },
     {
         "name": "ipv6",
-        "value": "hit=1689279519622&t=4",
+        "value": "hit=1689518690226&t=4",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -160,6 +160,21 @@
         "session": true,
         "firstPartyDomain": "",
         "partitionKey": null,
+        "storeId": null
+    },
+    {
+        "name": "_U",
+        "value": "1cy1ZlzkSoc99f4CyufdDhKuXMFr2vLisVcroI7op3lMIqzNZjvkTGtFeMYnPWTdeGY1KKqLiD8KxXBL06Aoef6dQmtsRsyhWhwlUyLVW2f_F3gu3ik9h07_r9wP185NvZT5N-0faMSI4fue3zcGHySl23ZITauv0wMgrA9fZJVDBVMY1pApru_O-ZxyDmRU3BLawDVrjkB48THsamGp6RQ",
+        "domain": ".bing.com",
+        "hostOnly": false,
+        "path": "/",
+        "secure": true,
+        "httpOnly": false,
+        "sameSite": "no_restriction",
+        "session": false,
+        "firstPartyDomain": "",
+        "partitionKey": null,
+        "expirationDate": 1690644416,
         "storeId": null
     },
     {
@@ -209,7 +224,7 @@
     },
     {
         "name": "NAP",
-        "value": "V=1.9&E=1bff&C=8_J6pPxG9O4ly5OSxfrbb6rbeqIy8LQcE7cBC2VeIdRwUvA-BneRTA&W=1",
+        "value": "V=1.9&E=1c39&C=lFVf6x7penJ6kLQy3-TCoeC1c_QrPK365wIjRE5y8x_h72FT2_3Hzw&W=1",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -219,12 +234,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1705344712,
+        "expirationDate": 1706743616,
         "storeId": null
     },
     {
         "name": "_RwBf",
-        "value": "ilt=9&ihpd=3&ispd=5&rc=272&rb=272&gb=0&rg=0&pc=272&mtu=0&rbb=0.0&g=0&cid=&clo=0&v=4&l=2023-07-13T07:00:00.0000000Z&lft=0001-01-01T00:00:00.0000000&aof=0&o=0&p=bingcopilotwaitlist&c=MY00IA&t=8641&s=2023-02-10T12:44:57.5928598+00:00&ts=2023-07-13T19:33:21.5773134+00:00&rwred=0&wls=2&lka=0&lkt=0&TH=&mta=0&e=r64kTIIzVAF0JP6_fWHhvnw4LKt7U-KN_qPW6-KYv5Yppb5y9BK6cz2oSfVfOAibbKrChdhlynDTpzlBgbTv8L-lXJ6GIdsdsSwgGfKA9H0&A=&r=1&mte=0&dci=0",
+        "value": "ilt=9&ihpd=3&ispd=5&rc=278&rb=278&gb=0&rg=0&pc=278&mtu=0&rbb=0.0&g=0&cid=&clo=0&v=5&l=2023-07-16T07:00:00.0000000Z&lft=0001-01-01T00:00:00.0000000&aof=0&o=0&p=bingcopilotwaitlist&c=MY00IA&t=8641&s=2023-02-10T12:44:57.5928598+00:00&ts=2023-07-16T14:11:47.8803956+00:00&rwred=0&wls=2&lka=0&lkt=0&TH=&mta=0&e=r64kTIIzVAF0JP6_fWHhvnw4LKt7U-KN_qPW6-KYv5Yppb5y9BK6cz2oSfVfOAibbKrChdhlynDTpzlBgbTv8L-lXJ6GIdsdsSwgGfKA9H0&A=380702115E7BF0ADF775577FFFFFFFFF&r=1&mte=0&dci=0",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -234,7 +249,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1720899201,
+        "expirationDate": 1752675108,
         "storeId": null
     },
     {
@@ -249,12 +264,12 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1752348801,
+        "expirationDate": 1752588707,
         "storeId": null
     },
     {
         "name": "_EDGE_S",
-        "value": "SID=19CB7C0FC5CF610F213D6F42C45260AF",
+        "value": "SID=128F0D632D3266230E1D1E332C32672F",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -278,7 +293,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1722972801,
+        "expirationDate": 1723212708,
         "storeId": null
     },
     {
@@ -298,7 +313,7 @@
     },
     {
         "name": "_HPVN",
-        "value": "CS=eyJQbiI6eyJDbiI6MTUsIlN0IjoyLCJRcyI6MCwiUHJvZCI6IlAifSwiU2MiOnsiQ24iOjE1LCJTdCI6MCwiUXMiOjAsIlByb2QiOiJIIn0sIlF6Ijp7IkNuIjoxNSwiU3QiOjAsIlFzIjowLCJQcm9kIjoiVCJ9LCJBcCI6dHJ1ZSwiTXV0ZSI6dHJ1ZSwiTGFkIjoiMjAyMy0wNy0xM1QwMDowMDowMFoiLCJJb3RkIjowLCJHd2IiOjAsIkRmdCI6bnVsbCwiTXZzIjowLCJGbHQiOjAsIkltcCI6ODh9",
+        "value": "CS=eyJQbiI6eyJDbiI6MTcsIlN0IjoyLCJRcyI6MCwiUHJvZCI6IlAifSwiU2MiOnsiQ24iOjE3LCJTdCI6MCwiUXMiOjAsIlByb2QiOiJIIn0sIlF6Ijp7IkNuIjoxNywiU3QiOjAsIlFzIjowLCJQcm9kIjoiVCJ9LCJBcCI6dHJ1ZSwiTXV0ZSI6dHJ1ZSwiTGFkIjoiMjAyMy0wNy0xNlQwMDowMDowMFoiLCJJb3RkIjowLCJHd2IiOjAsIkRmdCI6bnVsbCwiTXZzIjowLCJGbHQiOjAsIkltcCI6OTd9",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -308,7 +323,7 @@
         "session": false,
         "firstPartyDomain": "",
         "partitionKey": null,
-        "expirationDate": 1752435201,
+        "expirationDate": 1752675109,
         "storeId": null
     },
     {
@@ -328,7 +343,7 @@
     },
     {
         "name": "KievRPSSecAuth",
-        "value": "FABSBBRaTOJILtFsMkpLVWSG6AN6C/svRwNmAAAEgAAACITHoZq3ovPdEAQnHI46DuVUF9Rk9BdRxpgE/zGeE1ae7ljmpp8aKMCoNY7C5rBX3Q3cyK1c1dXgUNkkJLzCH0FxiBpIXn5vbofQg9xsVi50eXqUa6LJUNRSOktItmWD7njMAcBkmZ0wBcklTnUFEb8nsXnbzRXhzafg6La3jOO2S0h7CqNZsEFyVAP2hfr5jg4jQ0133Lrh//Hh3X3O/G70b2YxOMaIqoDtcKr9mwqb/BGzO1dwzp9zCLd/w4ZUHSEoexdBemIikAFxophe6La385pzJsEW+4EdyZNCTPe9oiOWXugcPZkNyvJdKh3EEjcvXoYGZqxR7a0rrgDPdkiw2hToMUuhHBOrOzG09RwBGZgLbrpPoJPNbh+6ve+/SkBKYzoFlmyoWLOJUbbJjvdO87g/iyVjtd/j6ZWacOKCiLDctIKMXa6eMVfrhZs739D4eL6MeGCS/hPMUka0p4/va7lzEbQWM3aRW/PHX7LdAGUeKCHo9sq2pZtBKQ5XtSv8AH35mVgDWgfaY8qylK9NYJSPGE1WR/VvKmoqKXRgC9ztXQpNMJKGtzC7LprIrwo4qOpVEMOZY8F34B0tH+ebb0jq7BxAGKaztSslCppbpucV7rDcQNVmJTkoQQnR80vm7VkRor79BvIMPJEp6h3TrYMiqJ7ULt+9m+s+FG8zpDl8LqtC50MbNoSkXN2czuciPlDKSf83K7GGsbBJe94uTzbLgDmhMWP5af0EDTs1bsOhcpPaNg2pqLiZkvuFOZFdPbj2W1vMsnm78b0epLHKj7opAPgCUMRbChN8n3BcO/NbT5JXcrZBVUwBd79tPCvxFA9bgUYHTzbDuqE0kjZVdAOf6FLW+LLkGwHd9HSSisxxa2t3oZ/fw3wu1pMS0NowHfIQx5qeIxW5m2wVYoD/muMT7ThniCrm+tIQvYKyGImzwr6Q/QbsOioytfCbJK3Yg1Vui7Pp73oDEn7bEIz3AuVYvZmmhjwlG6xnHRjvnE0X3RrNfm3UYmlm2C+6Q7nB+ZAsT71ArNaKk8y742QvYCQVn72DYI0/JI9yUcAMmnTVHoPEAvNqGiTT2Rntwx4bFHnoSPs1+jf5690p17n9+GJNOhDPTttsbVHLZZSF4mzJWceAu0QC1/nAWTpTA+6Q7Fz4G14awpPsP2V5vas6Ih2c0efyqw565Quu3+ipt1OYEls7RdQk1ubWFEc1o5udvU3x8RJtyhHbObRapbrol57lzCsjOvoNkvJFX/oSF+dsnqyFzcMKTXCZyCCPpu5tK55BIC65lB0Ta6gIrlgNadDQBtwuOc7mdv/FI7lzw1dJONlf6PIt6vtsthlDsL9is+wFf58hpvFaSbav1vmZMqN2I/sR4ZR151Q8UE3eUThfZ+UodXQqdRQAEgQkWu8zkSmskF6XERKYxd5trB4=",
+        "value": "FABSBBRaTOJILtFsMkpLVWSG6AN6C/svRwNmAAAEgAAACD7FbGxNedEiEASTAcNNV86Ust7QcAS8JuVlStnWaqqOx9khjdSvUm4+K3cfcrItKNcFsx4C780/aOUKP84HsF6M3Wa+/Sk8+8OFgzhPHNrKIO+P1jZ6PCGq6etJWV/+l6zAaJBWIvs+yhRqdkFRoEBl8V+aBm2ylC89m+bs4SoEedY1iEklZaUBK7UkGuO5IPos9Y0kV+OwR496vA/E888rQEmpF+niu9jwGErhaTDgXoZn15gUKlwiZZEuBcIQtUE/kpLKT/QXJqIjEiC6g92+XgHhn7B6kn3ZhRGt/aXu5XOeY7b30WZBEmtF23FpU/22PDYg/js73eGurhfX4I7tZd36INmYszGQzLhsoDCUbLpWJeHJeXA2UEIrLvOmGHMzs8s9WyRvLTvMKmd9CgtPW6EGUuRC6gEBqtQUZmbiVtqOVc1YXKRmgPYv2xUCq9zmLoetf8HvBhRETKg+rn0Mx0aGw00LNsOZa9WKVub5cHLL0jsKjdEOtNPhCr2jfBM6CFRFPK4SyQtvfws5M3Vvgj4pkFG3aznW8g+q+TKFYN5omUpFKmE5U2JDNWGKq6u/gcSioO9/2yjcbdspkxBSxO/zVwLPIU1T+7Mqt8n5+DLJIpaKn/MTULi8dbr09RtVal7duDdMVcKU4r+pcSlzXi3Ye7LC7UxiIpeUdQkYrivJUJrp006jt1HK1OEAtXrf6AZNGH+/+h0KZqBdMttR2hAP8Eq+fqlS2b++8CFs/nDdtHvrgOWJb2/e/F/WLvt/TAopRmfL6rwvJhPSFD05Kqcsm8Csbti782DGfQ8dszCnyMzA0ShSTkigkrhJqeokWZsKfr1JtpQlNBf7eKeVh/8nOJpG/nNbqraiwEHHVN+QBCqDbTHvceXaUYejNpytMVjpwh0mhDsw+vQr7DiRh/nOdKL5j5ot14OoBG2vgtofqatCz/WjZHMUgOiguMyfrY9r/SMh89/dyhQX/6JufgsdaQfcua++Hgk9SRAwOO25xp1CTlk6KLilpfYnFeZgKDZIIAEVB405rM5G5Z4w+ussAuCf5dRgEwlo978ygby7B0SC1td40zBTbiSnKM9TdPThX/wnQ2BW/NZLYKCnasf+I29Yt79/rsaIYp66B6tTolCAkG6VUwFZ8GdMoaqaxFUD8WBMJ338L2Aob4lPUVch6edhPdhVfCe29KgVHnfGsWUN6i5RS55f7aLmQL1r4RmGLxt6bSEYvw8lMTmskfbl4VOCR/dksRrwZJBR0UQj68QpqNlEj1beXCvq8yHDdUwxPm5krSa5f7yPUcfMxnHiWQycc4iCtDc2ozonxk+GykSUMJ5SA+ziICE3i0uPc8MuDEvUX7/jWk33437j6kYg7xQNd+o81fC43LR+Gsgfh6ReftrSixQArq2szfJFjRIJ9iwGaPx9fXCdSCA=",
         "domain": ".bing.com",
         "hostOnly": false,
         "path": "/",
@@ -384,6 +399,35 @@
         "firstPartyDomain": "",
         "partitionKey": null,
         "expirationDate": 1709728868,
+        "storeId": null
+    },
+    {
+        "name": "WLID",
+        "value": "Rg20Vq/LMGy10keJsrYNa6QfaLgweJi450xoLgcM6/wgKSfCkZD3Y965tI7sbm7JwuE156dtQ25pq1CZLTkMtTRlM+bvFBZq4K8FTDabcw0=",
+        "domain": ".bing.com",
+        "hostOnly": false,
+        "path": "/",
+        "secure": true,
+        "httpOnly": true,
+        "sameSite": "no_restriction",
+        "session": false,
+        "firstPartyDomain": "",
+        "partitionKey": null,
+        "expirationDate": 1690644417,
+        "storeId": null
+    },
+    {
+        "name": "WLS",
+        "value": "C=df581c271adcdd1d&N=Andrew",
+        "domain": ".bing.com",
+        "hostOnly": false,
+        "path": "/",
+        "secure": true,
+        "httpOnly": false,
+        "sameSite": "no_restriction",
+        "session": true,
+        "firstPartyDomain": "",
+        "partitionKey": null,
         "storeId": null
     }
 ]
