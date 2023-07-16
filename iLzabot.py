@@ -63,6 +63,8 @@ async def edgegpt(prompt,update: Update) -> None:
                 links = parse_text_with_footnote_links(response)
                 response = remove_footnotes(response)
                 response = replace_footnotes_with_html_url(links,response)
+                if "Searching" in message:
+                    continue;
                 if not message:
                     if response:
                         message = await update.message.reply_text(text=response, parse_mode = ParseMode.HTML)
