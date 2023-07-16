@@ -63,8 +63,7 @@ async def edgegpt(prompt,update: Update) -> None:
                 links = parse_text_with_footnote_links(response)
                 response = remove_footnotes(response)
                 response = replace_footnotes_with_html_url(links,response)
-                if "Searching" in response:
-                    continue;
+                logging.info(response)
                 if not message:
                     if response:
                         message = await update.message.reply_text(text=response, parse_mode = ParseMode.HTML)
@@ -73,7 +72,7 @@ async def edgegpt(prompt,update: Update) -> None:
                         if message is not None:  # added check for None
                             await message.edit_text(text=response,parse_mode = ParseMode.HTML)
                     every_20_messages+=1
-        logging.info(json.dumps(response))
+        # logging.info(json.dumps(response))
         last_message = response["item"]["messages"][-1]
         if "adaptiveCards" not in last_message:
             raise KeyError("adaptiveCards key not found in the last message.")

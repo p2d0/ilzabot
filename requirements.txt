@@ -9,6 +9,7 @@ python-telegram-bot
 # logging
 aiohttp_socks
 bs4
+lxml
 typing
 yt-dlp
 ffmpeg-python
