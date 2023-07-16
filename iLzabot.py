@@ -58,7 +58,7 @@ async def edgegpt(prompt,update: Update) -> None:
     message = None
     every_20_messages = 0
     try:
-        async for final, response in bot.ask_stream(prompt=prompt):
+        async for final, response in bot.ask_stream(prompt=prompt,conversation_style="creative"):
             if not final:
                 links = parse_text_with_footnote_links(response)
                 response = remove_footnotes(response)
