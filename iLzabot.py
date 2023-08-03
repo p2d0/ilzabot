@@ -190,7 +190,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text('интересно когда в бане тесно')
     elif '@ilza_bot' in text:
         await update.message.reply_text('Спасибо')
-    elif any(link in text for link in ['youtube.com/clip/','youtube.com/shorts/', 'twitter.com/', 'reddit.com/']):
+    elif any(link in text for link in ['youtube.com/clip/','youtube.com/shorts/', 'twitter.com/', 'reddit.com/','tiktok.com']):
         text = update.message.text
         link_regex = r'(https?://(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})'
         match = re.search(link_regex, text)
