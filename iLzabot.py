@@ -196,7 +196,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
 
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': '[ext=mp4]'}) as ydl:
+        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': '[ext=mp4]', 'cookiefile': './instacookie'}) as ydl:
             ydl.download([match.group(0)])
         # Send the video to the chat
         with open('video.mp4', 'rb') as video_file:
