@@ -106,6 +106,7 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         update = query;
     else:
         prompt = update.message.text
+    prompt = "#no_search " + prompt
     await edgegpt(prompt,update);
 
 
