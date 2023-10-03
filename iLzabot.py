@@ -58,7 +58,7 @@ async def edgegpt(prompt,update: Update) -> None:
     message = None
     every_30_messages = 0
     try:
-        async for final, response in bot.ask_stream(prompt=prompt,conversation_style="precise"):
+        async for final, response in bot.ask_stream(prompt=prompt,conversation_style="creative"):
             if not final:
                 logging.info(response)
                 links = parse_text_with_footnote_links(response)
@@ -226,7 +226,8 @@ app.add_handler(CallbackQueryHandler(button_click))
 async def main():
     global bot;
     print(cookies)
-    bot = await Chatbot.create(cookies=cookies)
+    # bot = await Chatbot.create(cookies=cookies,proxy="socks5://localhost:8091")
+    # await bot.ask(prompt="pepegas",conversation_style="creative")
 
 try:
     loop = asyncio.get_event_loop()
