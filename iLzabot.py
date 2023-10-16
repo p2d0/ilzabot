@@ -143,6 +143,9 @@ i=0
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
+    if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
+            await update.message.delete();
+            return
 
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
