@@ -29,19 +29,15 @@ cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
 
 
 async def handle_imagegen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if update.message.from_user.username == 'ahmetoff':
-            # Delete the message
-            await update.message.delete();
-            return
-    # await update.message.reply_chat_action(ChatAction.UPLOAD_PHOTO, update.message.message_thread_id)
-    # async with ImageGenAsyncWithProxy("./new_cookie.json","socks5://localhost:8093",True) as image_generator:
-    #     try:
-    #         photos = await image_generator.get_images(update.message.text)
-    #         media = [InputMediaPhoto(photo) for photo in photos]
-    #         await update.message.reply_media_group(media)
-    #     except Exception as e:
-    #         log.error(e)
-    #         await update.message.reply_text(str(e))
+    await update.message.reply_chat_action(ChatAction.UPLOAD_PHOTO, update.message.message_thread_id)
+    async with ImageGenAsyncWithProxy("./new_cookie.json","socks5://localhost:8093",True) as image_generator:
+        try:
+            photos = await image_generator.get_images(update.message.text)
+            media = [InputMediaPhoto(photo) for photo in photos]
+            await update.message.reply_media_group(media)
+        except Exception as e:
+            log.error(e)
+            await update.message.reply_text(str(e))
 
 
 async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -143,9 +139,6 @@ i=0
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
-    if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
-            await update.message.delete();
-            return
 
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
