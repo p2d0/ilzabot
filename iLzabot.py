@@ -136,9 +136,20 @@ app = ApplicationBuilder().read_timeout(5000).write_timeout(10000).token("233787
 
 random.seed(time.time())
 i=0
+ahmetoff_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
+    global ahmetoff_message_count  # Access the message count variable
+    # Check if the message is from 'ahmetoff'
+    if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
+        # Increment the message count for 'ahmetoff'
+        ahmetoff_message_count += 1
+
+        # Check if this is the 5th message from 'ahmetoff' and delete it
+        if ahmetoff_message_count % 5 == 0:
+            await update.message.delete()
+            return
 
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
