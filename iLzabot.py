@@ -148,6 +148,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         # Check if this is the 5th message from 'ahmetoff' and delete it
         if ahmetoff_message_count % 5 == 0:
+            giga  = gigachad_vid(text,"нет")
+            await update.message.reply_video(giga)
             await update.message.delete()
             return
 
