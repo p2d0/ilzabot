@@ -229,7 +229,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 app.add_handler(CommandHandler("hello", hello))
 # app.add_handler(CommandHandler("ilzapolite", openai_ilzapolite_response))
 # app.add_handler(CommandHandler("gpt", openai_gpt3_response))
-app.add_handler(CommandHandler("imagegen", handle_imagegen))
+# app.add_handler(CommandHandler("imagegen", handle_imagegen))
 app.add_handler(CommandHandler("newchat", newchat))
 # app.add_handler(CommandHandler("trueilza", openai_trueilza_response))
 app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_edgegpt))
