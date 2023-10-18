@@ -142,13 +142,16 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
     global ahmetoff_message_count  # Access the message count variable
     # Check if the message is from 'ahmetoff'
+    if update.message.from_user.username == 'akhmetof':
+        await gigachad_vid(f"@{update.message.from_user.username}\: {text}",f"@iLza_bot\: Нет")
+        await update.message.reply_video("./output_final.mp4")
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
         ahmetoff_message_count += 1
 
         # Check if this is the 5th message from 'ahmetoff' and delete it
         if ahmetoff_message_count % 5 == 0:
-            await gigachad_vid(f"@{update.message.from_user.username}: {text}",f"@iLza_bot: Нет")
+            await gigachad_vid(f"@{update.message.from_user.username}\: {text}",f"@iLza_bot\: Нет")
             await update.message.reply_video("./output_final.mp4")
             await update.message.delete()
             return
