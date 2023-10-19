@@ -114,7 +114,11 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = await bot.ask(update.message.text)
-    await update.message.reply_text(text)
+    if "нет" in text:
+        await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
+        await update.message.reply_video("./output_final.mp4")
+    else:
+        await update.message.reply_text(text)
 
 
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -144,10 +148,12 @@ app = ApplicationBuilder().read_timeout(5000).write_timeout(10000).token("233787
 random.seed(time.time())
 i=0
 ahmetoff_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
+akhmetof_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
     global ahmetoff_message_count  # Access the message count variable
+    global akhmetof_message_count  # Access the message count variable
     # Check if the message is from 'ahmetoff'
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
@@ -155,8 +161,16 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         # Check if this is the 5th message from 'ahmetoff' and delete it
         if ahmetoff_message_count % 5 == 0:
-            await gigachad_vid(f"@{update.message.from_user.username}\: {text}",f"@iLza_bot\: Нет")
-            await update.message.reply_video("./output_final.mp4")
+            await update.message.reply_video("./ahmet1-3000.mp4")
+            await update.message.delete()
+            return
+    if update.message.from_user.username == 'akhmetof' and text.startswith("/"):
+        # Increment the message count for 'ahmetoff'
+        akhmetof_message_count += 1
+
+        # Check if this is the 5th message from 'akhmetof' and delete it
+        if akhmetof_message_count % 5 == 0:
+            await update.message.reply_video("./ahmet3.mp4")
             await update.message.delete()
             return
 
