@@ -174,6 +174,9 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global ahmetoff_message_count  # Access the message count variable
     global androncerx_message_count  # Access the message count variable
     # Check if the message is from 'ahmetoff'
+    if update.message.from_user.username == 'serene_boy' and text.startswith("/"):
+            await update.message.reply_video("./damir1-3000.mp4")
+            return
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
         ahmetoff_message_count += 1
