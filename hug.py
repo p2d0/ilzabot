@@ -13,6 +13,8 @@ class Bot():
         self.chatbot = hugchat.ChatBot(cookies)
     def ask(self,text) -> str:
         return str(self.chatbot.query(text))
+    def ask_stream(self,text) -> str:
+        return self.chatbot.query(text,stream=True)
     def reset(self):
         id = self.chatbot.new_conversation()
         self.chatbot.change_conversation(id)
