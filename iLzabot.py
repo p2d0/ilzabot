@@ -163,12 +163,12 @@ app = ApplicationBuilder().read_timeout(5000).write_timeout(10000).token("233787
 random.seed(time.time())
 i=0
 ahmetoff_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
-akhmetof_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
+androncerx_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
     global ahmetoff_message_count  # Access the message count variable
-    global akhmetof_message_count  # Access the message count variable
+    global androncerx_message_count  # Access the message count variable
     # Check if the message is from 'ahmetoff'
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
@@ -179,12 +179,12 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await update.message.reply_video("./ahmet1-3000.mp4")
             await update.message.delete()
             return
-    if update.message.from_user.username == 'akhmetof' and text.startswith("/"):
+    if update.message.from_user.username == 'androncerx' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
-        akhmetof_message_count += 1
+        androncerx_message_count += 1
 
-        # Check if this is the 5th message from 'akhmetof' and delete it
-        if akhmetof_message_count % 5 == 0:
+        # Check if this is the 5th message from 'androncerx' and delete it
+        if androncerx_message_count % 5 == 0:
             await update.message.reply_video("./ahmet3.mp4")
             await update.message.delete()
             return
