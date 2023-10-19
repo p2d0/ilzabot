@@ -113,7 +113,20 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await edgegpt(prompt,update);
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    text = bot.ask(update.message.text)
+    stream = bot.ask_stream(update.message.text)
+    message = None
+    every_30_messages = 0
+    for  response in stream:
+        logging.info(response)
+        if not message:
+            if response:
+                message = await update.message.reply_text(str(response))
+        else:
+            if every_30_messages % 30 == 0:
+                if message is not None:  # added check for None
+                    await message.edit_text(str(response))
+            every_30_messages+=1
+
     if "нет" in text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
         await update.message.reply_video("./output_final.mp4")
