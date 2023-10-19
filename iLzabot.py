@@ -119,7 +119,8 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     response_text = ""
     for  response in stream:
         logging.info(response)
-        response_text += response['token']
+        if response:
+            response_text += response['token']
         if not message:
             if response:
                 message = await update.message.reply_text(response_text)
