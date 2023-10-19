@@ -11,9 +11,9 @@ class Bot():
     def __init__(self)-> None:
         cookies = json.loads(open("./hug.json", encoding="utf-8").read())
         self.chatbot = hugchat.ChatBot(cookies)
-    async def ask(self,text) -> str:
+    def ask(self,text) -> str:
         return str(self.chatbot.query(text))
-    async def reset(self):
+    def reset(self):
         id = self.chatbot.new_conversation()
         self.chatbot.change_conversation(id)
 

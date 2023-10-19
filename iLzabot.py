@@ -113,7 +113,7 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await edgegpt(prompt,update);
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    text = await bot.ask(update.message.text)
+    text = bot.ask(update.message.text)
     if "нет" in text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
         await update.message.reply_video("./output_final.mp4")
@@ -138,7 +138,7 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 
 async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await bot.reset()
+    bot.reset()
     await update.message.reply_text("Чат стерт")
 
 app = ApplicationBuilder().read_timeout(5000).write_timeout(10000).token("233787808:AAH71m_JtqkQP5ZADD2yxYI2ye8TKTeMnxE").build()
@@ -242,8 +242,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
         link = match.group(0);
         transcript = get_transcript(link);
-        await bot.reset()
-        answer = await bot.ask(f'Summarize yourself the following youtube transcript (answer in russian) "{transcript}" (answer in russian)')
+        bot.reset()
+        answer = bot.ask(f'Summarize yourself the following youtube transcript (answer in russian) "{transcript}" (answer in russian)')
         await update.message.reply_text(answer)
 
 
