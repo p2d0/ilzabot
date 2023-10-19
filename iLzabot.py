@@ -116,15 +116,17 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     stream = bot.ask_stream(update.message.text)
     message = None
     every_30_messages = 0
+    response_text = ""
     for  response in stream:
         logging.info(response)
+        response_text += response['token']
         if not message:
             if response:
-                message = await update.message.reply_text(str(response))
+                message = await update.message.reply_text(response_text)
         else:
             if every_30_messages % 30 == 0:
                 if message is not None:  # added check for None
-                    await message.edit_text(str(response))
+                    await message.edit_text(response_text)
             every_30_messages+=1
 
     if "нет" in text.lower():
