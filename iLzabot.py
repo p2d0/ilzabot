@@ -130,7 +130,7 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     await message.edit_text(response_text)
             every_30_messages+=1
 
-    if "нет" in text.lower():
+    if "нет" in response_text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
         await update.message.reply_video("./output_final.mp4")
     await update.message.reply_text(text)
