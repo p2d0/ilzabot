@@ -180,8 +180,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         # Check if this is the 5th message from 'ahmetoff' and delete it
         if ahmetoff_message_count % 5 == 0:
-            await update.message.reply_video("./ahmet1-3000.mp4")
-            await update.message.delete()
+            await update.message.reply_video("./ahmet3.mp4")
             return
     if update.message.from_user.username == 'androncerx' and text.startswith("/"):
         # Increment the message count for 'ahmetoff'
@@ -189,8 +188,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         # Check if this is the 5th message from 'androncerx' and delete it
         if androncerx_message_count % 5 == 0:
-            await update.message.reply_video("./ahmet3.mp4")
-            await update.message.delete()
+            await update.message.reply_video("./ahmet1-3000.mp4")
             return
 
     if '/ilzadembel' in text:
