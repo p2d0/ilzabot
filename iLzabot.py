@@ -129,6 +129,10 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 if message is not None:  # added check for None
                     await message.edit_text(response_text)
             every_30_messages+=1
+        if not response:
+            if message is not None:  # added check for None
+                await message.edit_text(response_text)
+
 
     if "нет" in response_text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
