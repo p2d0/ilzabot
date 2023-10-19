@@ -1,6 +1,7 @@
 # EdgeGPT
 # git+https://github.com/acheong08/EdgeGPT.git@refs/pull/610/merge#egg=EdgeGPT
 git+https://github.com/xnny/EdgeGPT.git#egg=EdgeGPT
+hugchat
 asyncio
 requests
 pytz

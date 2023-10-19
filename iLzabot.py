@@ -21,11 +21,14 @@ import sys
 from typing import List
 from footnote_links import parse_text_with_footnote_links, replace_footnotes_with_html_url, remove_footnotes
 from summarize import get_transcript
+from hug import Bot
 import yt_dlp
 # from yt_dlp.postprocessor.ffmpeg import FFmpegExtractAudioPP
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
 cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
+
+bot = Bot();
 
 
 async def handle_imagegen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -109,6 +112,10 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     prompt = "#no_search " + prompt
     await edgegpt(prompt,update);
 
+async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    text = await bot.ask(update.message.text)
+    await update.message.reply_text(text)
+
 
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Get the callback query and data
@@ -157,7 +164,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
         await update.message.reply_text(f"Со времен возвращения илюззии прошло {date.years} лет {date.months} месяцев {date.days} дней 👮")
     elif 'ильза' in text:
-        await handle_edgegpt(update, context)
+        await handle_chatbot(update, context)
     elif '/eugenedembel' in text:
         date = datetime.now() - datetime(2022, 12, 16)
         await update.message.reply_text(f"🔥🔥🔥 Со времени возвращения Жеки прошло {date.days} дней 🎊🔥🔥🔥")
@@ -223,7 +230,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         link = match.group(0);
         transcript = get_transcript(link);
         await bot.reset()
-        await edgegpt(f'Summarize yourself the following youtube transcript (output in russian) "{transcript}"',update)
+        answer = await bot.ask(f'Summarize yourself the following youtube transcript (output in russian) "{transcript}"')
+        await update.message.reply_text(answer)
 
 
 app.add_handler(CommandHandler("hello", hello))
@@ -232,7 +240,7 @@ app.add_handler(CommandHandler("hello", hello))
 # app.add_handler(CommandHandler("imagegen", handle_imagegen))
 app.add_handler(CommandHandler("newchat", newchat))
 # app.add_handler(CommandHandler("trueilza", openai_trueilza_response))
-app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_edgegpt))
+app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_chatbot))
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
 # app.add_handler(InlineQueryHandler(inline_query))
 app.add_handler(CallbackQueryHandler(button_click))
