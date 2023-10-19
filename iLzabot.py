@@ -243,7 +243,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         link = match.group(0);
         transcript = get_transcript(link);
         await bot.reset()
-        answer = await bot.ask(f'Summarize yourself the following youtube transcript (output in russian) "{transcript}"')
+        answer = await bot.ask(f'Summarize yourself the following youtube transcript (answer in russian) "{transcript}" (answer in russian)')
         await update.message.reply_text(answer)
 
 
