@@ -114,7 +114,7 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = await bot.ask(update.message.text)
-    if "нет" in text:
+    if "нет" in text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
         await update.message.reply_video("./output_final.mp4")
     await update.message.reply_text(text)
