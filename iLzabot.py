@@ -166,8 +166,8 @@ app = ApplicationBuilder().read_timeout(5000).write_timeout(10000).token("233787
 
 random.seed(time.time())
 i=0
-ahmetoff_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
-androncerx_message_count = 0  # Variable to keep track of the message count for user 'ahmetoff'
+ahmetoff_message_count = 1  # Variable to keep track of the message count for user 'ahmetoff'
+androncerx_message_count = 1  # Variable to keep track of the message count for user 'ahmetoff'
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
@@ -175,7 +175,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global androncerx_message_count  # Access the message count variable
     # Check if the message is from 'ahmetoff'
     logging.info((ahmetoff_message_count + androncerx_message_count))
-    if (ahmetoff_message_count + androncerx_message_count) % 15 == 30:
+    if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
             await update.message.reply_video("./fight1.mp4")
             return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
