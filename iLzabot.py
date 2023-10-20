@@ -176,6 +176,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Check if the message is from 'ahmetoff'
     if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
             await update.message.reply_video("./fight1.mp4")
+            ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
+            androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
             return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
             await update.message.reply_video("./zen1.mp4")
