@@ -180,8 +180,16 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if text.startswith("/imagegen") and update.message.message_thread_id != 39:
         await update.message.reply_text("Не тот чат чертила, пиши в iLzaBot & AI Stuff")
         await update.message.delete()
+        return
     user_id = update.message.from_user.id
     current_time = time.time()
+
+    imagegen_count = text.count("/imagegen")
+    if imagegen_count > 1:
+        await update.message.reply_text("Много имагегенов в одном сообщении, УДАЛЯЮ")
+        await update.message.delete()
+        return;
+
     if text.startswith("/imagegen") and user_id in last_message_time and current_time - last_message_time[user_id] < rate_limit:
         await update.message.delete();
         return
