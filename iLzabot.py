@@ -168,12 +168,26 @@ random.seed(time.time())
 i=0
 ahmetoff_message_count = 1  # Variable to keep track of the message count for user 'ahmetoff'
 androncerx_message_count = 1  # Variable to keep track of the message count for user 'ahmetoff'
+rate_limit = 5  # 1 message per second
+
+# Dictionary to keep track of the last message time for each user
+last_message_time = {}
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     text = update.message.text.lower()
     global ahmetoff_message_count  # Access the message count variable
     global androncerx_message_count  # Access the message count variable
-    # Check if the message is from 'ahmetoff'
+    if text.startswith("/imagegen") and update.message.message_thread_id != 39:
+        await update.message.reply_text("Не тот чат чертила, пиши в iLzaBot & AI Stuff")
+        await update.message.delete()
+    user_id = update.message.from_user.id
+    current_time = time.time()
+    if text.startswith("/imagegen") and user_id in last_message_time and current_time - last_message_time[user_id] < rate_limit:
+        await update.message.delete();
+        return
+
+    last_message_time[user_id] = current_time
+
     if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
             await update.message.reply_video("./fight1.mp4")
             ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
