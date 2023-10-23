@@ -194,7 +194,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.delete();
         return
 
-    last_message_time[user_id] = current_time
+    if text.startswith("/imagegen"):
+        last_message_time[user_id] = current_time
 
     if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
             await update.message.reply_video("./fight1.mp4")
