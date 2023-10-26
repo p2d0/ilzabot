@@ -293,7 +293,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
         link = match.group(0);
         transcript = get_transcript(link);
-        answer = bot.ask(f'Переведи коротко о чем следующий текст: "{transcript}"')
+        answer = bot.ask(f'Суммируй: "{transcript}"')
         await update.message.reply_text(answer)
 
 
