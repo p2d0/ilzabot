@@ -11,7 +11,7 @@ class Bot():
         giga = GigaChat(base_url="https://gigachat.devices.sberbank.ru/api/v1",scope="GIGACHAT_API_PERS",auth_url="https://ngw.devices.sberbank.ru:9443/api/v2/oauth",credentials=token,verify_ssl_certs=False)
         self.chatbot = giga
     def ask(self,text) -> str:
-        return str(self.chatbot.chat(text))
+        return str(self.chatbot.chat(text).choices[0].message.content)
     def ask_stream(self,text):
         stream = self.chatbot.stream(text)
         return self._handle_stream(stream)
