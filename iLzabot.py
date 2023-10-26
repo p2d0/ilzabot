@@ -21,7 +21,8 @@ import sys
 from typing import List
 from footnote_links import parse_text_with_footnote_links, replace_footnotes_with_html_url, remove_footnotes
 from summarize import get_transcript
-from hug import Bot
+# from hug import Bot
+from gigachat import Bot
 import yt_dlp
 # from yt_dlp.postprocessor.ffmpeg import FFmpegExtractAudioPP
 
