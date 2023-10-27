@@ -203,7 +203,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
             return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
-            await update.message.reply_video
             video_options = ["./zen1.mp4", "./zen2.mp4"]
             selected_video = random.choice(video_options)
             await update.message.reply_video(selected_video)
