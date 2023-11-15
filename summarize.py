@@ -34,7 +34,7 @@ def parse_xml_file(filename='out.en.ttml'):
 
 
 def find_first_file():
-    for file_name in ["out.ru-orig.ttml", "out.en-orig.ttml","out.ru.ttml","out.en.ttml"]:
+    for file_name in ["out.ru-orig.ttml", "out.ru.ttml", "out.en-orig.ttml","out.en.ttml"]:
         file_path = os.path.join("./", file_name)
         if os.path.exists(file_path):
             return file_path

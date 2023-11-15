@@ -10,7 +10,7 @@ class Bot():
 
     def __init__(self)-> None:
         cookies = json.loads(open("./hug.json", encoding="utf-8").read())
-        self.chatbot = hugchat.ChatBot(cookies)
+        self.chatbot = hugchat.ChatBot(cookies,default_llm=0)
     def ask(self,text) -> str:
         return str(self.chatbot.chat(text,retry_count=1))
     def ask_stream(self,text) -> str:
