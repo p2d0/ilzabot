@@ -10,7 +10,7 @@ def download_subtitles(video_url):
         'skip_download': True,
         'writesubtitles': True,
         'writeautomaticsub': True,
-        'subtitleslangs': ['..-orig'],
+        'subtitleslangs': ['(?:ru|en)(?:-orig)?'],
         'subtitlesformat': 'ttml',
         "overwrites": True,
         'outtmpl': 'out.%(ext)s'
@@ -32,24 +32,27 @@ def parse_xml_file(filename='out.en.ttml'):
         text += p.get_text() + ' '
     return text
 
-def get_transcript(video_url):
-    download_subtitles(video_url);
 
+def find_first_file():
+    for file_name in ["out.ru-orig.ttml", "out.en-orig.ttml","out.ru.ttml","out.en.ttml"]:
+        file_path = os.path.join("./", file_name)
+        if os.path.exists(file_path):
+            return file_path
+    return None
+
+def remove_old_ttmls():
     files = glob.glob('out.*.ttml')
     # if there are any matching files
     if files:
-        # get the first matching file
-        first_file = files[0]
-        # get the extension of the first matching file
-        extension = os.path.splitext(first_file)[-1]
-        # get the base name of the file without the extension
-        base_name = os.path.splitext(os.path.basename(first_file))[0].split('.')[0]
-        # create a new file name "out.ttml"
-        new_file_name = f"{base_name}.ttml"
-        # loop through all matching files
-        print(new_file_name)
-        for file in files:
-            # move each file to the new file name
-            shutil.move(file, new_file_name)
-    transcript = parse_xml_file("out.ttml");
+        for file_path in files:
+            os.remove(file_path)
+
+def get_transcript(video_url):
+    remove_old_ttmls()
+
+    download_subtitles(video_url);
+    transcript = parse_xml_file(find_first_file());
     return transcript
+
+if __name__ == '__main__':
+    download_subtitles("https://www.youtube.com/shorts/D1dv39-ekBM")

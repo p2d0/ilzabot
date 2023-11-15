@@ -283,6 +283,11 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': '[ext=mp4]', 'cookiefile': './instacookie'}) as ydl:
             ydl.download([match.group(0)])
         # Send the video to the chat
+
+        transcript = get_transcript(match.group(0));
+        answer = bot.ask(f'Суммируй: "{transcript}"')
+        await update.message.reply_text(answer)
+
         with open('video.mp4', 'rb') as video_file:
             await update.message.reply_video(video=video_file,caption = f"<b>{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
             await update.message.delete()

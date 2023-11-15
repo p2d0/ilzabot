@@ -1,4 +1,10 @@
 /__pycache__/
 /ilzabot/
-*.mp4
+# *.mp4
+# !combined.mp4
+# !ahmet3.mp4
+# !ahmet1-3000.mp4
+# !damir1-3000.mp4
+# !zen1.mp4
+# !fight1.mp4
 .env
