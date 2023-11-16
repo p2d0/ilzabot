@@ -219,7 +219,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             return
     if update.message.from_user.username == 'androncerx' and text.startswith("/"):
             androncerx_message_count += 1
-            video_options = ["./thanos-cerx1.mp4"]
+            video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
             selected_video = random.choice(video_options)
             await update.message.reply_video(selected_video)
             return
