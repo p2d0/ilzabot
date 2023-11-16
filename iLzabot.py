@@ -289,9 +289,10 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         with open('video.mp4', 'rb') as video_file:
             await update.message.reply_video(video=video_file,caption = f"<b>{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
         transcript = get_transcript(match.group(0));
-        answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}"')
-        await update.message.reply_text(answer)
-        await update.message.delete()
+        if transcript:
+            answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}"')
+            await update.message.reply_text(answer)
+            await update.message.delete()
 
     elif any(link in text for link in ['youtube.com/','youtu.be']):
         text = update.message.text
@@ -299,8 +300,9 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
         link = match.group(0);
         transcript = get_transcript(link);
-        answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}"')
-        await update.message.reply_text(answer)
+        if transcript:
+            answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}"')
+            await update.message.reply_text(answer)
 
 
 app.add_handler(CommandHandler("hello", hello))

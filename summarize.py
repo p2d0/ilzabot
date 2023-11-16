@@ -51,8 +51,10 @@ def get_transcript(video_url):
     remove_old_ttmls()
 
     download_subtitles(video_url);
-    transcript = parse_xml_file(find_first_file());
-    return transcript
+    f = find_first_file()
+    if f:
+        transcript = parse_xml_file(f);
+        return transcript
 
 if __name__ == '__main__':
     download_subtitles("https://www.youtube.com/shorts/D1dv39-ekBM")
