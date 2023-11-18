@@ -301,7 +301,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         link = match.group(0);
         transcript = get_transcript(link);
         if transcript:
-            answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}"')
+            answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}" (Отвечай по русски!)')
             await update.message.reply_text(answer)
 
 
