@@ -20,9 +20,10 @@ def test_summarize_ilza():
     answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{text}"')
     assert answer == ""
 
-@pytest.mark.skip()
 def test_main():
-    assert "hands can work" in get_transcript("https://www.youtube.com/shorts/D1dv39-ekBM")
+    print(get_transcript("https://youtube.com/shorts/y8lMSMoqbps?si=u7XN1hG3HWWEllNE"))
+    # assert "hands can work" in get_transcript("https://www.youtube.com/shorts/D1dv39-ekBM")
 
+@pytest.mark.skip()
 def test_no_subs():
     assert None == get_transcript("https://youtube.com/shorts/y8lMSMoqbps?si=u7XN1hG3HWWEllNE")

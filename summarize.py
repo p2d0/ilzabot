@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import yt_dlp
+import argparse
 import glob
 import shutil
 import os
@@ -57,4 +58,10 @@ def get_transcript(video_url):
         return transcript
 
 if __name__ == '__main__':
-    download_subtitles("https://www.youtube.com/shorts/D1dv39-ekBM")
+    parser = argparse.ArgumentParser(description='Download subtitles for a given YouTube video URL.')
+
+    parser.add_argument('video_url', type=str, help='YouTube video URL')
+
+    args = parser.parse_args()
+
+    print(get_transcript(args.video_url))
