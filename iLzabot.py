@@ -211,13 +211,13 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
             await update.message.reply_video("./damir1-3000.mp4")
             return
-    if update.message.from_user.username == 'ahmetoff' and text.startswith("/"):
+    if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
             ahmetoff_message_count += 1
             video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
             selected_video = random.choice(video_options)
             await update.message.reply_video(selected_video)
             return
-    if update.message.from_user.username == 'androncerx' and text.startswith("/"):
+    if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
             androncerx_message_count += 1
             video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
             selected_video = random.choice(video_options)
