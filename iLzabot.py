@@ -219,11 +219,15 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             # video_options = ["./zen2.mp4"]
             # selected_video = random.choice(video_options)
             # await update.message.reply_video(selected_video)
-            selected_video = facetrack_video(download_random_short())
+            short = download_random_short();
+            await update.message.set_reaction("👌")
+            selected_video = facetrack_video(short)
             await update.message.reply_video(selected_video)
             return
     if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
-            selected_video = facetrack_video(download_random_short())
+            short = download_random_short();
+            await update.message.set_reaction("👌")
+            selected_video = facetrack_video(short)
             await update.message.reply_video(selected_video)
             # await update.message.reply_video("./damir1-3000.mp4")
             return
@@ -231,15 +235,18 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             ahmetoff_message_count += 1
             # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
             # selected_video = random.choice(video_options)
-            selected_video = facetrack_video(download_random_short())
+            short = download_random_short();
+            await update.message.set_reaction("👌")
+            selected_video = facetrack_video(short)
             await update.message.reply_video(selected_video)
             return
     if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
             androncerx_message_count += 1
             # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
             # selected_video = random.choice(video_options)
-            selected_video = facetrack_video(download_random_short())
-            await update.message.reply_video(selected_video)
+            short = download_random_short();
+            await update.message.set_reaction("👌")
+            selected_video = facetrack_video(short)
             await update.message.reply_video(selected_video)
             return
 

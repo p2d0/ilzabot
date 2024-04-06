@@ -15,7 +15,7 @@ def get_youtube_videos_under_30_seconds():
     search_request = youtube.search().list(
         part="snippet",
         maxResults=50,
-        q="trailer",
+        q="fight",
         type="video",
         videoDuration="short",
         order="viewCount"
