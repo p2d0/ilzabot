@@ -4,10 +4,11 @@ import random
 from moviepy.editor import VideoFileClip
 # from pytube import YouTube
 from collections import deque
+import dlib
+face_detector = dlib.get_frontal_face_detector()
 
 class FaceTracker:
-    def __init__(self, face_cascade):
-        self.face_cascade = face_cascade
+    def __init__(self):
         self.trackers = []
         self.names = ["@ahmetoff", "@androncerx", "@Arsn17", "@serene_boy"]
         self.unused_names = deque(self.names)
@@ -21,7 +22,12 @@ class FaceTracker:
     def update(self, frame):
         frame = frame.copy()
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = self.face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+
+        # Detect faces
+        faces = face_detector(gray)
+
+        # Convert the Dlib rectangles to OpenCV format
+        faces = [(x.left(), x.top(), x.right() - x.left(), x.bottom() - x.top()) for x in faces]
 
         # First, update all existing trackers and remove any that are no longer tracking a face
         updated_trackers = []
@@ -63,8 +69,7 @@ class FaceTracker:
         return frame
 
 def facetrack_video(input_video):
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    face_tracker = FaceTracker(face_cascade)
+    face_tracker = FaceTracker()
 
     clip = VideoFileClip(input_video)
 
@@ -79,8 +84,7 @@ def facetrack_video(input_video):
     return output_video
 
 def main():
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-    face_tracker = FaceTracker(face_cascade)
+    face_tracker = FaceTracker()
     input_video = "input_video.mp4"
     output_video = "kekoutput.mp4"
 
