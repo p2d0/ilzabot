@@ -1,4 +1,5 @@
 import requests
+import time
 import random
 from googleapiclient.discovery import build
 from pytube import YouTube
@@ -14,11 +15,12 @@ def get_youtube_videos_under_30_seconds():
 
     search_request = youtube.search().list(
         part="snippet",
-        maxResults=50,
-        q="fight",
+        maxResults=200,
+        q="ufc #short",
         type="video",
         videoDuration="short",
-        order="viewCount"
+        order="relevance",
+        safeSearch="none"
     )
 
     search_response = search_request.execute()
@@ -27,7 +29,13 @@ def get_youtube_videos_under_30_seconds():
     return video_ids
 
 def download_random_short_video(video_id):
-    youtube = YouTube(f"https://www.youtube.com/watch?v={video_id}", on_progress_callback=None, on_complete_callback=None)
+    youtube = YouTube(f"https://www.youtube.com/watch?v={video_id}",
+                      on_progress_callback=None,
+                      on_complete_callback=None,
+                      use_oauth=True,
+                      allow_oauth_cache=True
+                      )
+    youtube.bypass_age_gate();
     video = youtube.streams.get_by_resolution("720p")
     video_title = video.title
 
@@ -42,6 +50,7 @@ def download_random_short_video(video_id):
 
 def download_random_short():
     video_ids = get_youtube_videos_under_30_seconds()
+    random.seed(time.time())  # Use current time as seed
     random_video_id = random.choice(video_ids)
     input_video_file, video_title = download_random_short_video(random_video_id)
     return input_video_file;
