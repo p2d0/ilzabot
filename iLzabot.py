@@ -9,9 +9,9 @@ from datetime import datetime
 import responses
 import random
 from dateutil.relativedelta import relativedelta
-from telegram import Update, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from telegram import Update, ReplyParameters, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.constants import ChatAction, ParseMode
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler,MessageReactionHandler, filters
 from gigachad import gigachad_vid
 from telegram.ext import InlineQueryHandler, CallbackQueryHandler
 from imagegen import ImageGenAsyncWithProxy
@@ -22,14 +22,26 @@ from typing import List
 from footnote_links import parse_text_with_footnote_links, replace_footnotes_with_html_url, remove_footnotes
 from summarize import get_transcript
 # from hug import Bot
-# from giga import Bot
-from hug import Bot
+from dotenv import load_dotenv
+from giga import Bot
+# from hug import Bot
 import yt_dlp
+import os
+import cv2
 # from yt_dlp.postprocessor.ffmpeg import FFmpegExtractAudioPP
+from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
+from db import setup_database,store_message, get_user_id_by_message_id
+from yt import download_random_short
+from faces import facetrack_video
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
 cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
 
+conn = setup_database()
 bot = Bot();
 
 
@@ -213,14 +225,17 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             return
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
             ahmetoff_message_count += 1
-            video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
-            selected_video = random.choice(video_options)
+            # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
+            # selected_video = random.choice(video_options)
+            selected_video = facetrack_video(download_random_short())
             await update.message.reply_video(selected_video)
             return
     if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
             androncerx_message_count += 1
-            video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
-            selected_video = random.choice(video_options)
+            # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
+            # selected_video = random.choice(video_options)
+            selected_video = facetrack_video(download_random_short())
+            await update.message.reply_video(selected_video)
             await update.message.reply_video(selected_video)
             return
 
@@ -275,20 +290,21 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text('интересно когда в бане тесно')
     elif '@ilza_bot' in text:
         await update.message.reply_text('Спасибо')
-    elif any(link in text for link in ['youtube.com/clip/','youtube.com/shorts/','instagram.com/reel/', 'twitter.com/', 'reddit.com/','tiktok.com']):
+    elif any(link in text for link in ['douyin.com','youtube.com/clip/','youtube.com/shorts/','instagram.com/reel/', "x.com/", 'twitter.com/', 'reddit.com/','tiktok.com']):
         text = update.message.text
         link_regex = r'(https?://(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})'
         match = re.search(link_regex, text)
 
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': 'best[ext=mp4]', 'cookiefile': './instacookie'}) as ydl:
+        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': 'mp4', 'cookiefile': './instacookie'}) as ydl:
             ydl.download([match.group(0)])
         # Send the video to the chat
 
 
         with open('video.mp4', 'rb') as video_file:
-            await update.message.reply_video(video=video_file,caption = f"<b>{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+            reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
             await update.message.delete()
+            store_message(conn, reply.message_id, update.message.from_user.id)
 
     elif any(link in text for link in ['youtube.com/','youtu.be']):
         text = update.message.text
@@ -300,25 +316,85 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             answer = bot.ask(f'(Отвечай по русски!) Извлеки суть: "{transcript}" (Отвечай по русски!)')
             await update.message.reply_text(answer)
 
+def convert_video_to_gif(video_path, gif_path, max_width=480):
+    clip = VideoFileClip(video_path)
+    resized_clip = clip.resize(0.3)
+    resized_clip.write_gif(gif_path, fps=10, opt='OptimizePlus', fuzz=10)
+
+async def handle_video(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    video = update.message.video
+    if video and video.duration <= 15:
+        video_file = await context.bot.get_file(video)
+        await video_file.download_to_drive('video.mp4')
+
+        convert_video_to_gif('video.mp4', 'output.gif')
+
+        with open('output.gif', 'rb') as gif:
+            await update.message.reply_document(document=gif)
+            await update.message.delete()
+
+        os.remove('video.mp4')
+    else:
+        await update.message.reply_text('Please send a video shorter than 30 seconds.')
+
+def add_text_to_gif(gif_path, text, start_time, end_time, text_color='white', font_size=36, font='/nix/var/nix/profiles/system/sw/share/X11/fonts/Roboto-Medium.ttf'):
+    clip = VideoFileClip(gif_path)
+    text_clip = TextClip(text, font=font, fontsize=font_size, color=text_color)
+    text_clip = text_clip.set_position(('center',"bottom"))
+    final_clip = CompositeVideoClip([clip, text_clip.set_duration(end_time - start_time).set_start(start_time)])
+    final_clip.write_gif(gif_path, fps=10, opt='OptimizePlus', fuzz=10)
+
+async def add_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    args = context.args
+    if len(args) >= 3:
+        start_time = float(args[0])
+        end_time = float(args[1])
+        text = ' '.join(args[2:])
+
+        add_text_to_gif('output.gif', text, start_time, end_time)
+
+        with open('output.gif', 'rb') as gif:
+            await update.message.reply_document(document=gif)
+            await update.message.delete()
+    else:
+        await update.message.reply_text('Usage: /add-text <start time> <end time> <text>')
+
+async def handle_reactions(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    reaction = update.message_reaction.new_reaction
+    message_id = update.message_reaction.message_id
+    chat_id = update.message_reaction.chat.id
+    username = update.message_reaction.user.username
+    user_id = get_user_id_by_message_id(conn, message_id)
+    if user_id is not None:
+        emoji = reaction[0].emoji
+        await context.bot.send_message(chat_id=user_id, text=f"@{username}: {emoji}", reply_parameters=ReplyParameters(message_id,chat_id))
+
+
 app.add_handler(CommandHandler("hello", hello))
 # app.add_handler(CommandHandler("ilzapolite", openai_ilzapolite_response))
 # app.add_handler(CommandHandler("gpt", openai_gpt3_response))
 # app.add_handler(CommandHandler("imagegen", handle_imagegen))
 app.add_handler(CommandHandler("newchat", newchat))
 # app.add_handler(CommandHandler("trueilza", openai_trueilza_response))
+app.add_handler(CommandHandler('add_text', add_text))
 app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_chatbot))
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
 # app.add_handler(InlineQueryHandler(inline_query))
 app.add_handler(CallbackQueryHandler(button_click))
+app.add_handler(MessageHandler(filters.VIDEO, handle_video))
+app.add_handler(MessageReactionHandler(handle_reactions))
+
 async def main():
     global bot;
-    print(cookies)
+    print(os.getcwd())
+    print(os.environ.get('PATH'))
+    # print(cookies)
     # bot = await Chatbot.create(cookies=cookies,proxy="socks5://localhost:8091")
     # await bot.ask(prompt="pepegas",conversation_style="creative")
 
 try:
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
-    app.run_polling()
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 except Exception as e:
     logging.exception(e)
