@@ -5,19 +5,18 @@ from moviepy.editor import VideoFileClip
 # from pytube import YouTube
 from collections import deque
 
-def rect_contains_point(rect, point):
-    x1, y1, w, h = rect
-    x2, y2 = x1 + w, y1 + h
-    px, py = point
-    return x1 <= px <= x2 and y1 <= py <= y2
-
 class FaceTracker:
     def __init__(self, face_cascade):
         self.face_cascade = face_cascade
         self.trackers = []
-        self.names = ["@ahmetoff", "@androncerx"]
+        self.names = ["@ahmetoff", "@androncerx", "@Arsn17", "@serene_boy"]
         self.unused_names = deque(self.names)
-        self.face_ids = {}
+
+    def rect_contains_point(self,rect, point):
+        x1, y1, w, h = rect
+        x2, y2 = x1 + w, y1 + h
+        px, py = point
+        return x1 <= px <= x2 and y1 <= py <= y2
 
     def update(self, frame):
         frame = frame.copy()
@@ -26,7 +25,7 @@ class FaceTracker:
 
         # First, update all existing trackers and remove any that are no longer tracking a face
         updated_trackers = []
-        for tracker, name, face_id in self.trackers:
+        for tracker, name in self.trackers:
             ok, bbox = tracker.update(frame)
 
             if ok:
@@ -38,30 +37,29 @@ class FaceTracker:
                 text_y = p1[1] - 10
                 cv2.putText(frame, name, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)  # Update the font scale
 
-                updated_trackers.append((tracker, name, face_id, bbox))
+                updated_trackers.append((tracker, name, bbox))
             else:
-                self.unused_names.append((name, face_id))
+                self.unused_names.append(name)
 
         # Then, initialize new trackers for any remaining faces
         for x, y, w, h in faces:
             face_point = (x + w // 2, y + h // 2)
-            has_tracker = any([rect_contains_point(bbox, face_point) for _, _, _, bbox in updated_trackers])
+            has_tracker = any([self.rect_contains_point(bbox, face_point) for _, _, bbox in updated_trackers])
             if has_tracker:
                 continue
 
             if len(self.unused_names) == 0:
-                self.unused_names = deque([(name, face_id) for name, face_id in self.face_ids.items()])
+                self.unused_names = deque(self.names)
 
             if len(updated_trackers) >= len(self.names):
                 break
 
-            name, face_id = self.unused_names.popleft()
-            self.face_ids[face_id] = name
+            name = self.unused_names.popleft()
             tracker = cv2.TrackerKCF_create()
             tracker.init(frame, (x, y, w, h))
-            updated_trackers.append((tracker, name, face_id, (x, y, w, h)))
+            updated_trackers.append((tracker, name, (x, y, w, h)))
 
-        self.trackers = [(tracker, name, face_id) for tracker, name, face_id, _ in updated_trackers]
+        self.trackers = [(tracker, name) for tracker, name, _ in updated_trackers]
         return frame
 
 def facetrack_video(input_video):
