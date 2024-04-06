@@ -216,12 +216,16 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
             return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
-            video_options = ["./zen2.mp4"]
-            selected_video = random.choice(video_options)
+            # video_options = ["./zen2.mp4"]
+            # selected_video = random.choice(video_options)
+            # await update.message.reply_video(selected_video)
+            selected_video = facetrack_video(download_random_short())
             await update.message.reply_video(selected_video)
             return
     if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
-            await update.message.reply_video("./damir1-3000.mp4")
+            selected_video = facetrack_video(download_random_short())
+            await update.message.reply_video(selected_video)
+            # await update.message.reply_video("./damir1-3000.mp4")
             return
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
             ahmetoff_message_count += 1
