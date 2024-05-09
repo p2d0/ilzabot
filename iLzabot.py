@@ -11,6 +11,7 @@ import random
 from dateutil.relativedelta import relativedelta
 from telegram import Update, ReplyParameters, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.constants import ChatAction, ParseMode
+from telegram.error import NetworkError
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler,MessageReactionHandler, filters
 from gigachad import gigachad_vid
 from telegram.ext import InlineQueryHandler, CallbackQueryHandler
@@ -66,8 +67,8 @@ def suggestedResponsesKeyboard(responses):
         if response["text"]:
             text = response["text"][:32] + "..." if len(response["text"]) > 35 else response["text"]
             keyboard.append([InlineKeyboardButton(text, callback_data=text)])
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    logging.info(reply_markup)
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            logging.info(reply_markup)
 
     return reply_markup
 
@@ -90,9 +91,9 @@ async def edgegpt(prompt,update: Update) -> None:
                     if every_30_messages % 30 == 0:
                         if message is not None:  # added check for None
                             await message.edit_text(text=response,parse_mode = ParseMode.HTML)
-                    every_30_messages+=1
-        logging.info(response)
-        # logging.info(json.dumps(response))
+                            every_30_messages+=1
+                            logging.info(response)
+                            # logging.info(json.dumps(response))
         last_message = response["item"]["messages"][-1]
         if "adaptiveCards" not in last_message:
             raise KeyError("adaptiveCards key not found in the last message.")
@@ -123,8 +124,8 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         update = query;
     else:
         prompt = update.message.text
-    prompt = "#no_search " + prompt
-    await edgegpt(prompt,update);
+        prompt = "#no_search " + prompt
+        await edgegpt(prompt,update);
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     stream = bot.ask_stream(update.message.text)
@@ -142,7 +143,7 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             if every_60_messages % 60 == 0:
                 if message is not None:  # added check for None
                     await message.edit_text(response_text)
-            every_60_messages+=1
+                    every_60_messages+=1
         if not response:
             if message is not None:  # added check for None
                 await message.edit_text(response_text)
@@ -166,8 +167,8 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         message = f'{name} (@{username}) нажал "{data}"'
     else:
         message = f'{name} нажал "{data}"'
-    await query.message.reply_text(message)
-    await handle_edgegpt(update,context)
+        await query.message.reply_text(message)
+        await handle_edgegpt(update,context)
 
 
 async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -211,44 +212,44 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         last_message_time[user_id] = current_time
 
     if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
-            await update.message.reply_video("./fight1.mp4")
-            ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
-            androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
-            return
+        await update.message.reply_video("./fight1.mp4")
+        ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
+        androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
+        return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
-            # video_options = ["./zen2.mp4"]
-            # selected_video = random.choice(video_options)
-            # await update.message.reply_video(selected_video)
+        # video_options = ["./zen2.mp4"]
+        # selected_video = random.choice(video_options)
+        # await update.message.reply_video(selected_video)
             short = download_random_short();
             await update.message.set_reaction("👌")
             selected_video = facetrack_video(short)
             await update.message.reply_video(selected_video)
             return
     if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
-            short = download_random_short();
-            await update.message.set_reaction("👌")
-            selected_video = facetrack_video(short)
-            await update.message.reply_video(selected_video)
-            # await update.message.reply_video("./damir1-3000.mp4")
-            return
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        # await update.message.reply_video("./damir1-3000.mp4")
+        return
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
-            ahmetoff_message_count += 1
-            # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
-            # selected_video = random.choice(video_options)
-            short = download_random_short();
-            await update.message.set_reaction("👌")
-            selected_video = facetrack_video(short)
-            await update.message.reply_video(selected_video)
-            return
+        ahmetoff_message_count += 1
+        # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
+        # selected_video = random.choice(video_options)
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        return
     if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
-            androncerx_message_count += 1
-            # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
-            # selected_video = random.choice(video_options)
-            short = download_random_short();
-            await update.message.set_reaction("👌")
-            selected_video = facetrack_video(short)
-            await update.message.reply_video(selected_video)
-            return
+        androncerx_message_count += 1
+        # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
+        # selected_video = random.choice(video_options)
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        return
 
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
@@ -271,15 +272,15 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         temp = random.choice(responses.responses_list)
         while temp in rand:
             temp = random.choice(responses.responses_list)
-        await update.message.reply_text(temp)
-        rand[i] = temp
+            await update.message.reply_text(temp)
+            rand[i] = temp
     elif text.endswith('да'):
         da_used_list = [1, 1, 1]
         temp = random.choice(responses.da_responses_list)
         while temp in da_used_list:
             temp = random.choice(responses.da_responses_list)
-        await update.message.reply_text(temp)
-        da_used_list[i] = temp
+            await update.message.reply_text(temp)
+            da_used_list[i] = temp
     elif "иди в жопу" in text:
         giga  = gigachad_vid(text,"нет")
         await update.message.reply_video(giga)
@@ -307,9 +308,14 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
 
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.mp4',"overwrites": True, 'format': 'mp4', 'cookiefile': './instacookie'}) as ydl:
+        with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<30M]+ba[ext=m4a]/b[ext=mp4][filesize<30M] / bv*+ba/b", 'cookiefile': './instacookie',
+                               'postprocessors': [{
+                                   "key": "FFmpegVideoRemuxer",
+                                   "preferedformat": "mp4"
+                               }]
+                               }) as ydl:
             ydl.download([match.group(0)])
-        # Send the video to the chat
+            # Send the video to the chat
 
 
         with open('video.mp4', 'rb') as video_file:
@@ -392,7 +398,7 @@ app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filter
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
 # app.add_handler(InlineQueryHandler(inline_query))
 app.add_handler(CallbackQueryHandler(button_click))
-app.add_handler(MessageHandler(filters.VIDEO, handle_video))
+# app.add_handler(MessageHandler(filters.VIDEO, handle_video))
 app.add_handler(MessageReactionHandler(handle_reactions))
 
 async def main():
@@ -405,7 +411,13 @@ async def main():
 
 try:
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    # loop.run_until_complete(main())
+    app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
+    loop.close()
+except NetworkError as e:
+    time.sleep(10)
+    # asyncio.set_event_loop(asyncio.new_event_loop())
     app.run_polling(allowed_updates=Update.ALL_TYPES)
+    # loop.close()
 except Exception as e:
     logging.exception(e)
