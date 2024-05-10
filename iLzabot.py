@@ -67,8 +67,8 @@ def suggestedResponsesKeyboard(responses):
         if response["text"]:
             text = response["text"][:32] + "..." if len(response["text"]) > 35 else response["text"]
             keyboard.append([InlineKeyboardButton(text, callback_data=text)])
-            reply_markup = InlineKeyboardMarkup(keyboard)
-            logging.info(reply_markup)
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    logging.info(reply_markup)
 
     return reply_markup
 
@@ -91,9 +91,9 @@ async def edgegpt(prompt,update: Update) -> None:
                     if every_30_messages % 30 == 0:
                         if message is not None:  # added check for None
                             await message.edit_text(text=response,parse_mode = ParseMode.HTML)
-                            every_30_messages+=1
-                            logging.info(response)
-                            # logging.info(json.dumps(response))
+                every_30_messages+=1
+        logging.info(response)
+        # logging.info(json.dumps(response))
         last_message = response["item"]["messages"][-1]
         if "adaptiveCards" not in last_message:
             raise KeyError("adaptiveCards key not found in the last message.")
@@ -124,8 +124,8 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         update = query;
     else:
         prompt = update.message.text
-        prompt = "#no_search " + prompt
-        await edgegpt(prompt,update);
+    prompt = "#no_search " + prompt
+    await edgegpt(prompt,update);
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     stream = bot.ask_stream(update.message.text)
@@ -167,8 +167,8 @@ async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         message = f'{name} (@{username}) нажал "{data}"'
     else:
         message = f'{name} нажал "{data}"'
-        await query.message.reply_text(message)
-        await handle_edgegpt(update,context)
+    await query.message.reply_text(message)
+    await handle_edgegpt(update,context)
 
 
 async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -250,7 +250,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     #     selected_video = facetrack_video(short)
     #     await update.message.reply_video(selected_video)
     #     return
-
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
         await update.message.reply_text(f"Со времен возвращения илюззии прошло {date.years} лет {date.months} месяцев {date.days} дней 👮")
@@ -272,15 +271,15 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         temp = random.choice(responses.responses_list)
         while temp in rand:
             temp = random.choice(responses.responses_list)
-            await update.message.reply_text(temp)
-            rand[i] = temp
+        await update.message.reply_text(temp)
+        rand[i] = temp
     elif text.endswith('да'):
         da_used_list = [1, 1, 1]
         temp = random.choice(responses.da_responses_list)
         while temp in da_used_list:
             temp = random.choice(responses.da_responses_list)
-            await update.message.reply_text(temp)
-            da_used_list[i] = temp
+        await update.message.reply_text(temp)
+        da_used_list[i] = temp
     elif "иди в жопу" in text:
         giga  = gigachad_vid(text,"нет")
         await update.message.reply_video(giga)
