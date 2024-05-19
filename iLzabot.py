@@ -175,7 +175,7 @@ async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bot.reset()
     await update.message.reply_text("Чат стерт")
 
-app = ApplicationBuilder().read_timeout(10000).write_timeout(50000).token(os.getenv("TELEGRAM_TOKEN")).build()
+app = ApplicationBuilder().read_timeout(50000).write_timeout(100000).token(os.getenv("TELEGRAM_TOKEN")).build()
 
 
 random.seed(time.time())
@@ -307,7 +307,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         match = re.search(link_regex, text)
 
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<10M]+ba[ext=m4a]/b[ext=mp4][filesize<10M] / bv*+ba/b", 'cookiefile': './instacookie',
+        with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<30M]+ba[ext=m4a]/b[ext=mp4][filesize<30M] / bv*+ba/b", 'cookiefile': './instacookie',
                                'postprocessors': [{
                                    "key": "FFmpegVideoRemuxer",
                                    "preferedformat": "mp4"
