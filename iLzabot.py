@@ -175,7 +175,7 @@ async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bot.reset()
     await update.message.reply_text("Чат стерт")
 
-app = ApplicationBuilder().read_timeout(10).write_timeout(30).media_write_timeout(80).token(os.getenv("TELEGRAM_TOKEN")).build()
+app = ApplicationBuilder().media_write_timeout(50).token(os.getenv("TELEGRAM_TOKEN")).build()
 
 
 random.seed(time.time())
