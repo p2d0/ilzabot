@@ -18,10 +18,7 @@ class Bot():
     def _handle_stream(self,stream):
         for response in stream:
             chunk: ChoicesChunk = response.choices[0]
-            if chunk.finish_reason != "stop":
-                yield {"token":chunk.delta.content}
-            else:
-                yield None
+            yield {"token":chunk.delta.content}
     def reset(self):
         self.chatbot.close()
 

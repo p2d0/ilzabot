@@ -16,3 +16,5 @@ lxml
 typing
 yt-dlp
 ffmpeg-python
+googleapi
+pytube

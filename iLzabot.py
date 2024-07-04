@@ -198,58 +198,58 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.message.from_user.id
     current_time = time.time()
 
-    # imagegen_count = text.count("/imagegen")
-    # if imagegen_count > 1:
-    #     await update.message.reply_text("Много имагегенов в одном сообщении, УДАЛЯЮ")
-    #     await update.message.delete()
-    #     return;
+    imagegen_count = text.count("/imagegen")
+    if imagegen_count > 1:
+        await update.message.reply_text("Много имагегенов в одном сообщении, УДАЛЯЮ")
+        await update.message.delete()
+        return;
 
-    # if text.startswith("/imagegen") and user_id in last_message_time and current_time - last_message_time[user_id] < rate_limit:
-    #     await update.message.delete();
-    #     return
+    if text.startswith("/imagegen") and user_id in last_message_time and current_time - last_message_time[user_id] < rate_limit:
+        await update.message.delete();
+        return
 
-    # if text.startswith("/imagegen"):
-    #     last_message_time[user_id] = current_time
+    if text.startswith("/imagegen"):
+        last_message_time[user_id] = current_time
 
-    # if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
-    #     await update.message.reply_video("./fight1.mp4")
-    #     ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
-    #     androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
-    #     return
-    # if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
-    #     # video_options = ["./zen2.mp4"]
-    #     # selected_video = random.choice(video_options)
-    #     # await update.message.reply_video(selected_video)
-    #         short = download_random_short();
-    #         await update.message.set_reaction("👌")
-    #         selected_video = facetrack_video(short)
-    #         await update.message.reply_video(selected_video)
-    #         return
-    # if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
-    #     short = download_random_short();
-    #     await update.message.set_reaction("👌")
-    #     selected_video = facetrack_video(short)
-    #     await update.message.reply_video(selected_video)
-    #     # await update.message.reply_video("./damir1-3000.mp4")
-    #     return
-    # if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
-    #     ahmetoff_message_count += 1
-    #     # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
-    #     # selected_video = random.choice(video_options)
-    #     short = download_random_short();
-    #     await update.message.set_reaction("👌")
-    #     selected_video = facetrack_video(short)
-    #     await update.message.reply_video(selected_video)
-    #     return
-    # if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
-    #     androncerx_message_count += 1
-    #     # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
-    #     # selected_video = random.choice(video_options)
-    #     short = download_random_short();
-    #     await update.message.set_reaction("👌")
-    #     selected_video = facetrack_video(short)
-    #     await update.message.reply_video(selected_video)
-    #     return
+    if (ahmetoff_message_count + androncerx_message_count) % 25 == 0:
+        await update.message.reply_video("./fight1.mp4")
+        ahmetoff_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
+        androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
+        return
+    if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
+        # video_options = ["./zen2.mp4"]
+        # selected_video = random.choice(video_options)
+        # await update.message.reply_video(selected_video)
+            short = download_random_short();
+            await update.message.set_reaction("👌")
+            selected_video = facetrack_video(short)
+            await update.message.reply_video(selected_video)
+            return
+    if update.message.from_user.username == 'serene_boy' and text.startswith("/imagegen"):
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        # await update.message.reply_video("./damir1-3000.mp4")
+        return
+    if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
+        ahmetoff_message_count += 1
+        # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
+        # selected_video = random.choice(video_options)
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        return
+    if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
+        androncerx_message_count += 1
+        # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
+        # selected_video = random.choice(video_options)
+        short = download_random_short();
+        await update.message.set_reaction("👌")
+        selected_video = facetrack_video(short)
+        await update.message.reply_video(selected_video)
+        return
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
         await update.message.reply_text(f"Со времен возвращения илюззии прошло {date.years} лет {date.months} месяцев {date.days} дней 👮")

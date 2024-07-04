@@ -1,6 +1,8 @@
 /__pycache__/
 /ilzabot/
-# *.mp4
+*.mp4
+*.mp3
+*.webm
 # !combined.mp4
 # !ahmet3.mp4
 # !ahmet1-3000.mp4
