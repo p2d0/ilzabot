@@ -38,7 +38,6 @@ class Bot():
         self.messages.append(message)
     def reset(self):
         self.messages = [];
-        self.chatbot.close()
 
 if __name__ == '__main__':
     # token = os.getenv("GIGACHAT_TOKEN");
