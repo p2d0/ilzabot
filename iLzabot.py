@@ -150,7 +150,7 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
     if "нет" in response_text.lower():
-        await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {text}")
+        await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {response_text}")
         await update.message.reply_video("./output_final.mp4")
 
 
