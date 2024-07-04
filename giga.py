@@ -10,7 +10,7 @@ class Bot():
     def __init__(self)-> None:
         token = os.getenv("GIGACHAT_TOKEN");
         giga = GigaChat(base_url="https://gigachat.devices.sberbank.ru/api/v1",scope="GIGACHAT_API_PERS",auth_url="https://ngw.devices.sberbank.ru:9443/api/v2/oauth",credentials=token,verify_ssl_certs=False)
-        self.messages = [];
+        self.messages = self._init_messages();
         self.chatbot = giga
     def _init_messages():
         return [{"role": "system", "content": "Ты ассистент в чате телеграмм UpgradeGamma и тебя зовут Ильза"}]
@@ -39,7 +39,7 @@ class Bot():
             yield {"token":chunk.delta.content}
         self.messages.append(message)
     def reset(self):
-        self.messages = [];
+        self.messages = self._init_messages();
 
 if __name__ == '__main__':
     # token = os.getenv("GIGACHAT_TOKEN");
