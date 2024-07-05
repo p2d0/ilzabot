@@ -109,7 +109,7 @@ async def edgegpt(prompt,update: Update) -> None:
             await message.edit_text(text=msg, reply_markup=reply_markup,parse_mode = ParseMode.HTML)
         else:
             await update.message.reply_text(text=msg, reply_markup=reply_markup, parse_mode=ParseMode.HTML)
-        if "нет" in prompt.lower():
+        if "не" in prompt.lower():
             giga  = gigachad_vid(prompt,msg)
             await update.message.reply_video(giga)
     except Exception as e:
@@ -149,7 +149,7 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 await message.edit_text(response_text)
 
 
-    if "нет" in response_text.lower():
+    if "не" in response_text.lower():
         await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {response_text}")
         await update.message.reply_video("./output_final.mp4")
 
