@@ -2,17 +2,16 @@
 
 import asyncio
 from EdgeGPT.EdgeGPT import Chatbot, ConversationStyle
-import requests
 import re
 import time
 from datetime import datetime
 import responses
 import random
 from dateutil.relativedelta import relativedelta
-from telegram import Update, ReplyParameters, InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from telegram import Update, ReplyParameters, InlineQueryResultArticle, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from telegram.constants import ChatAction, ParseMode
 from telegram.error import NetworkError
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler,MessageReactionHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, MessageReactionHandler, filters
 from gigachad import gigachad_vid
 from telegram.ext import InlineQueryHandler, CallbackQueryHandler
 from imagegen import ImageGenAsyncWithProxy
@@ -27,13 +26,12 @@ from dotenv import load_dotenv
 from giga import Bot
 # from hug import Bot
 import yt_dlp
+from yt_dlp.YoutubeDL import DownloadError
 import os
 # import cv2
 # from yt_dlp.postprocessor.ffmpeg import FFmpegExtractAudioPP
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
-from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, filters
-from db import setup_database,store_message, get_user_id_by_message_id
+from db import setup_database, store_message, get_user_id_by_message_id
 from yt import download_random_short
 # from faces import facetrack_video
 
@@ -43,7 +41,7 @@ logging.basicConfig(level=logging.INFO,format='%(asctime)s %(message)s')
 cookies = json.loads(open("./new_cookie.json", encoding="utf-8").read())
 
 conn = setup_database()
-bot = Bot();
+bot = Bot()
 
 
 async def handle_imagegen(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -305,17 +303,20 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         text = update.message.text
         link_regex = r'(https?://(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})'
         match = re.search(link_regex, text)
-
+        await update.message.set_reaction("👌")
         # Download the video using yt-dlp
-        with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<10M]+ba[ext=m4a]/b[ext=mp4][filesize<10M] / bv*+ba/b", 'cookiefile': './instacookie',
-                               'postprocessors': [{
-                                   "key": "FFmpegVideoRemuxer",
-                                   "preferedformat": "mp4"
-                               }]
-                               }) as ydl:
-            ydl.download([match.group(0)])
-            # Send the video to the chat
-
+        try:
+            with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<10M]+ba[ext=m4a]/b[ext=mp4][filesize<10M] / bv*+ba/b", 'cookiefile': './instacookie',
+                                'proxy': 'http://localhost:8092',
+                                'postprocessors': [{
+                                    "key": "FFmpegVideoRemuxer",
+                                    "preferedformat": "mp4"
+                                }]
+                                }) as ydl:
+                ydl.download([match.group(0)])
+        except DownloadError:
+            await update.message.set_reaction("😢")
+            return
 
         with open('video.mp4', 'rb') as video_file:
             reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
