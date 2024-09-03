@@ -23,7 +23,8 @@ from footnote_links import parse_text_with_footnote_links, replace_footnotes_wit
 from summarize import get_transcript
 # from hug import Bot
 from dotenv import load_dotenv
-from giga import Bot
+# from giga import Bot
+from gemini import Bot
 # from hug import Bot
 import yt_dlp
 from yt_dlp.YoutubeDL import DownloadError

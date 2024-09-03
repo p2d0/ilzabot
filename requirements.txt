@@ -1,3 +1,4 @@
+git+https://github.com/HawkClaws/proxy_gemini.git
 git+https://github.com/xnny/EdgeGPT.git#egg=EdgeGPT
 gigachat
 python-dotenv
