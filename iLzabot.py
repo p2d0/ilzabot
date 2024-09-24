@@ -399,12 +399,15 @@ async def leaderboards(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 leaderboard_text = "Leaderboard:\n"
                 for entry in leaderboard:
                     leaderboard_text += f"@{entry['name']}: {entry['score']}\n"
-                await update.message.reply_text(leaderboard_text)
+                
+                button = InlineKeyboardButton("Play the game", url="https://t.me/iLza_bot/ahmet")
+                reply_markup = InlineKeyboardMarkup([[button]])
+                
+                await update.message.reply_text(leaderboard_text, reply_markup=reply_markup)
             else:
                 await update.message.reply_text('Failed to load leaderboard.')
 
 app.add_handler(CommandHandler("leaderboards", leaderboards))
-
 app.add_handler(CommandHandler("hello", hello))
 # app.add_handler(CommandHandler("ilzapolite", openai_ilzapolite_response))
 # app.add_handler(CommandHandler("gpt", openai_gpt3_response))
