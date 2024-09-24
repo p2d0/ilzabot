@@ -388,6 +388,20 @@ async def handle_reactions(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=user_id, text=f"@{username}: {emoji}", reply_parameters=ReplyParameters(message_id,chat_id))
 
 
+async def leaderboards(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Fetch the leaderboard data from the cloud storage
+    response = await context.bot.get('https://ahmetgame-2c5cd-default-rtdb.europe-west1.firebasedatabase.app/leaderboards.json')
+    if response.status_code == 200:
+        leaderboard = response.json()
+        leaderboard_text = "Leaderboard:\n"
+        for entry in leaderboard:
+            leaderboard_text += f"{entry['name']}: {entry['score']}\n"
+        await update.message.reply_text(leaderboard_text)
+    else:
+        await update.message.reply_text('Failed to load leaderboard.')
+
+app.add_handler(CommandHandler("leaderboards", leaderboards))
+
 app.add_handler(CommandHandler("hello", hello))
 # app.add_handler(CommandHandler("ilzapolite", openai_ilzapolite_response))
 # app.add_handler(CommandHandler("gpt", openai_gpt3_response))
