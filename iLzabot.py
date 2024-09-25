@@ -128,6 +128,7 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await edgegpt(prompt,update);
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update.message.set_reaction("👌")
     stream = bot.ask_stream(update.message.text)
     message = None
     every_60_messages = 0
