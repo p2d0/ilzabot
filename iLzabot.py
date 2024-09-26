@@ -131,7 +131,7 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await update.message.set_reaction("👌")
     reply_text = ""
     if update.message.reply_to_message:
-        reply_text = f"> @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
+        reply_text = update.message.reply_to_message.text + "\n"
     stream = bot.ask_stream(reply_text + update.message.text)
     message = None
     every_60_messages = 0
@@ -153,9 +153,9 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 await message.edit_text(response_text)
 
 
-    if "не" in response_text.lower():
-        await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {response_text}")
-        await update.message.reply_video("./output_final.mp4")
+    # if "нет" in response_text.lower():
+    #     await gigachad_vid(f"@{update.message.from_user.username}\: {update.message.text}",f"@iLza_bot\: {response_text}")
+    #     await update.message.reply_video("./output_final.mp4")
 
 
 async def button_click(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
