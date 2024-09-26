@@ -129,7 +129,10 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.set_reaction("👌")
-    stream = bot.ask_stream(update.message.text)
+    reply_text = ""
+    if update.message.reply_to_message:
+        reply_text = f"> @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
+    stream = bot.ask_stream(reply_text + update.message.text)
     message = None
     every_60_messages = 0
     response_text = ""
