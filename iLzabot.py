@@ -254,7 +254,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if '/ilzadembel' in text:
         date = relativedelta(datetime.now(), datetime(2016, 5, 22))
         await update.message.reply_text(f"Со времен возвращения илюззии прошло {date.years} лет {date.months} месяцев {date.days} дней 👮")
-    elif 'ильза' in text:
+    elif 'ильза' in text.lower():
         await handle_chatbot(update, context)
     elif '/eugenedembel' in text:
         date = datetime.now() - datetime(2022, 12, 16)

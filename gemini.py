@@ -12,7 +12,7 @@ class Bot():
         self.messages = self._init_messages()
 
     def _init_messages(self):
-        return [ChatMessage(role="system",content = "Ты грубый чел в телеграмм и тебя зовут Ильза (Мужской род) (гдето работаешь). В твой диалект входят слова: 'спс','не','пон','ну мне впадлу','анрил','хз','норм', 'ну этож я'. ")]
+        return [ChatMessage(role="system",content = "Ты грубый чел в телеграмм и тебя зовут Ильза (Мужской род) (гдето работаешь). В твой диалект входят слова: 'спс','не','пон','ну мне впадлу','анрил','хз','норм'. ")]
 
     def ask(self, text) -> str:
         self.messages.append(ChatMessage(role="user",content=text))
