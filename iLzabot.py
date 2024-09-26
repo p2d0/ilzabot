@@ -131,8 +131,8 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await update.message.set_reaction("👌")
     reply_text = ""
     if update.message.reply_to_message:
-        reply_text = update.message.reply_to_message.text + "\n"
-    stream = bot.ask_stream(reply_text + update.message.text)
+        reply_text = f"{update.message.reply_to_message.from_user.first_name} {update.message.reply_to_message.from_user.last_name}: '{update.message.reply_to_message.text}'\n"
+    stream = bot.ask_stream(reply_text + f"{update.message.from_user.first_name} {update.message.from_user.last_name}: '{update.message.text}'")
     message = None
     every_60_messages = 0
     response_text = ""
