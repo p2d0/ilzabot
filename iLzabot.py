@@ -127,9 +127,6 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     prompt = "#no_search " + prompt
     await edgegpt(prompt,update);
 
-async def handle_replies(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    if(update.message.reply_to_message.from_user.is_bot):
-        return await handle_chatbot(update,context)
 
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -202,6 +199,8 @@ rate_limit = 5  # 1 message per second
 last_message_time = {}
 
 async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if(update.message.reply_to_message and update.message.reply_to_message.from_user.is_bot):
+        return await handle_chatbot(update,context)
     text = update.message.text.lower()
     global ahmetoff_message_count  # Access the message count variable
     global androncerx_message_count  # Access the message count variable
@@ -431,10 +430,10 @@ app.add_handler(CommandHandler("hello", hello))
 app.add_handler(CommandHandler("newchat", newchat))
 # app.add_handler(CommandHandler("trueilza", openai_trueilza_response))
 app.add_handler(CommandHandler('add_text', add_text))
-app.add_handler(MessageHandler(filters.REPLY, handle_replies))
 app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_chatbot))
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
 # app.add_handler(InlineQueryHandler(inline_query))
+# app.add_handler(MessageHandler(filters.REPLY & filters.TEXT, handle_replies))
 app.add_handler(CallbackQueryHandler(button_click))
 # app.add_handler(MessageHandler(filters.VIDEO, handle_video))
 app.add_handler(MessageReactionHandler(handle_reactions))
