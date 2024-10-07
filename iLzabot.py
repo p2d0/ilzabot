@@ -133,9 +133,9 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await update.message.set_reaction("👌")
     reply_text = ""
     if update.message.reply_to_message:
-        reply_text = f"Сообщение от пользователя {update.message.reply_to_message.from_user.first_name} {update.message.reply_to_message.from_user.last_name}: '{update.message.reply_to_message.text}'\n"
+        reply_text = f"Сообщение от пользователя {update.message.reply_to_message.from_user.first_name} @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
     try:
-        stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.last_name}: '{update.message.text}'")
+        stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
     except Exception:
         await update.message.set_reaction("😢")
         return;
