@@ -335,15 +335,15 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         except DownloadError:
             await update.message.set_reaction("😢")
             return
-
-        with open('video.mp4', 'rb') as video_file:
-            try:
-                reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
-            except Exception as e:
-                print(f"An error occurred: {e}. Retrying...")
-                reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
-            await update.message.delete()
-            store_message(conn, reply.message_id, update.message.from_user.id)
+        video_file = open('video.mp4', 'rb');
+        try:
+            reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+        except Exception as e:
+            print(f"An error occurred: {e}. Retrying...")
+            reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+        await update.message.delete()
+        video_file.close()
+        store_message(conn, reply.message_id, update.message.from_user.id)
 
     elif any(link in text for link in ['youtube.com/','youtu.be']):
         text = update.message.text
