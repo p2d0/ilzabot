@@ -340,12 +340,12 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             reply = await update.message.reply_video(video='./video.mp4',caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
         except Exception as e:
             print(f"An error occurred: {e}. Retrying...")
-            await update.message.set_reaction("😠")
+            await update.message.set_reaction("😡")
             try:
                 reply = await update.message.reply_video(video='./video.mp4',caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
             except Exception as e:
                 print(f"An error occurred again: {e}. Setting reaction to crying emoji...")
-                await update.message.set_reaction("😭")
+                await update.message.set_reaction("😢")
                 return
             return
         await update.message.delete()
