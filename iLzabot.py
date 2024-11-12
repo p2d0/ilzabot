@@ -186,7 +186,7 @@ async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bot.reset()
     await update.message.reply_text("Чат стерт")
 
-app = ApplicationBuilder().media_write_timeout(360).token(os.getenv("TELEGRAM_TOKEN")).build()
+app = ApplicationBuilder().media_write_timeout(50).token(os.getenv("TELEGRAM_TOKEN")).build()
 
 
 random.seed(time.time())
@@ -335,12 +335,18 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         except DownloadError:
             await update.message.set_reaction("😢")
             return
-        video_file = open('video.mp4', 'rb');
+        # video_file = open('video.mp4', 'rb');
         try:
-            reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+            reply = await update.message.reply_video(video='./video.mp4',caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
         except Exception as e:
             print(f"An error occurred: {e}. Retrying...")
-            await update.message.set_reaction("😢")
+            await update.message.set_reaction("😠")
+            try:
+                reply = await update.message.reply_video(video='./video.mp4',caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+            except Exception as e:
+                print(f"An error occurred again: {e}. Setting reaction to crying emoji...")
+                await update.message.set_reaction("😭")
+                return
             return
         await update.message.delete()
         video_file.close()
