@@ -8,6 +8,7 @@ requests
 pytz
 python-dateutil
 python-telegram-bot
+python-telegram-bot[webhooks]
 # logging
 opencv-python
 moviepy
