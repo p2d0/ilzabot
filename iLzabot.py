@@ -349,7 +349,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 return
             return
         await update.message.delete()
-        video_file.close()
         store_message(conn, reply.message_id, update.message.from_user.id)
 
     elif any(link in text for link in ['youtube.com/','youtu.be']):
