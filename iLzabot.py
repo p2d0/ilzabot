@@ -186,7 +186,7 @@ async def newchat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bot.reset()
     await update.message.reply_text("Чат стерт")
 
-app = ApplicationBuilder().media_write_timeout(20).token(os.getenv("TELEGRAM_TOKEN")).build()
+app = ApplicationBuilder().media_write_timeout(360).token(os.getenv("TELEGRAM_TOKEN")).build()
 
 
 random.seed(time.time())
@@ -338,11 +338,10 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         video_file = open('video.mp4', 'rb');
         try:
             reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
-            video_file.close();
         except Exception as e:
             print(f"An error occurred: {e}. Retrying...")
-            video_file = open('video.mp4', 'rb');
-            reply = await update.message.reply_video(video=video_file,caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
+            await update.message.set_reaction("😢")
+            return
         await update.message.delete()
         video_file.close()
         store_message(conn, reply.message_id, update.message.from_user.id)
