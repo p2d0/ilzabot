@@ -25,7 +25,8 @@ from summarize import get_transcript
 # from hug import Bot
 from dotenv import load_dotenv
 # from giga import Bot
-from gemini import Bot
+# from gemini import Bot
+from openrouter import Bot
 # from hug import Bot
 import yt_dlp
 from yt_dlp.YoutubeDL import DownloadError
@@ -136,7 +137,8 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         reply_text = f"Сообщение от пользователя {update.message.reply_to_message.from_user.first_name} @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
     try:
         stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
-    except Exception:
+    except Exception as e:
+        logging.exception(e)
         await update.message.set_reaction("😢")
         return;
 
@@ -458,16 +460,16 @@ async def main():
     # await bot.ask(prompt="pepegas",conversation_style="creative")
 
 try:
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(main())
-    # app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
-    # loop.close()
-    app.run_webhook(
-        listen="0.0.0.0",
-        port=9999,
-        webhook_url='https://bots.upgradegamma.ru/'
-        # secret_token=''
-    )
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+    app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
+    loop.close()
+    # app.run_webhook(
+    #     listen="0.0.0.0",
+    #     port=9999,
+    #     webhook_url='https://bots.upgradegamma.ru/'
+    #     # secret_token=''
+    # )
 except NetworkError as e:
     pass
     # time.sleep(10)
