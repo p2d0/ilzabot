@@ -26,7 +26,7 @@ class Bot():
             "content": text
         })
         payload = {
-            "model": "google/gemini-flash-1.5-exp",
+            "model": "google/gemini-flash-1.5",
             "messages": self.messages,
         }
         response = requests.post(self.api_endpoint, json=payload, headers=self.headers)
@@ -45,7 +45,7 @@ class Bot():
             "content": text
         })
         payload = {
-            "model": "google/gemini-flash-1.5-exp",
+            "model": "google/gemini-flash-1.5",
             "messages": self.messages,
             "stream": True
         }
