@@ -152,7 +152,6 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if not message:
             message = await update.message.reply_text(response_text, parse_mode=ParseMode.HTML)
         elif every_30_messages % 30 == 0:
-            print("UPDATING")
             await message.edit_text(response_text, parse_mode=ParseMode.HTML)
     if message:
         await message.edit_text(response_text, parse_mode=ParseMode.HTML)
