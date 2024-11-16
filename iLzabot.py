@@ -232,9 +232,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         androncerx_message_count += 1  # Variable to keep track of the message count for user 'ahmetoff'
         return
     if update.message.from_user.username == 'Arsn17' and text.startswith("/imagegen"):
-        # video_options = ["./zen2.mp4"]
-        # selected_video = random.choice(video_options)
-        # await update.message.reply_video(selected_video)
             short = download_random_short();
             await update.message.set_reaction("👌")
             selected_video = facetrack_video(short)
@@ -245,12 +242,9 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.set_reaction("👌")
         selected_video = facetrack_video(short)
         await update.message.reply_video(selected_video)
-        # await update.message.reply_video("./damir1-3000.mp4")
         return
     if update.message.from_user.username == 'ahmetoff' and text.startswith("/imagegen"):
         ahmetoff_message_count += 1
-        # video_options = ["./ahmet3.mp4", "./banshee_ahmet1.mp4"]
-        # selected_video = random.choice(video_options)
         short = download_random_short();
         await update.message.set_reaction("👌")
         selected_video = facetrack_video(short)
@@ -258,8 +252,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     if update.message.from_user.username == 'androncerx' and text.startswith("/imagegen"):
         androncerx_message_count += 1
-        # video_options = ["./andronchi.mp4", "./thanos-cerx1.mp4", "./ahmet1-3000.mp4", "banshee_cerx1.mp4"]
-        # selected_video = random.choice(video_options)
         short = download_random_short();
         await update.message.set_reaction("👌")
         selected_video = facetrack_video(short)
@@ -337,7 +329,6 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         except DownloadError:
             await update.message.set_reaction("😢")
             return
-        # video_file = open('video.mp4', 'rb');
         try:
             reply = await update.message.reply_video(video='./video.mp4',caption = f"<b>@{update.message.from_user.username or update.message.from_user.first_name}</b>:\n{update.message.text}",parse_mode=ParseMode.HTML)
         except Exception as e:
@@ -437,33 +428,19 @@ async def leaderboards(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 app.add_handler(CommandHandler("leaderboards", leaderboards))
 app.add_handler(CommandHandler("hello", hello))
-# app.add_handler(CommandHandler("ilzapolite", openai_ilzapolite_response))
-# app.add_handler(CommandHandler("gpt", openai_gpt3_response))
-# app.add_handler(CommandHandler("imagegen", handle_imagegen))
 app.add_handler(CommandHandler("newchat", newchat))
-# app.add_handler(CommandHandler("trueilza", openai_trueilza_response))
 app.add_handler(CommandHandler('add_text', add_text))
 app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_chatbot))
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
-# app.add_handler(InlineQueryHandler(inline_query))
-# app.add_handler(MessageHandler(filters.REPLY & filters.TEXT, handle_replies))
 app.add_handler(CallbackQueryHandler(button_click))
-# app.add_handler(MessageHandler(filters.VIDEO, handle_video))
 app.add_handler(MessageReactionHandler(handle_reactions))
 
 async def main():
     global bot;
     print(os.getcwd())
     print(os.environ.get('PATH'))
-    # print(cookies)
-    # bot = await Chatbot.create(cookies=cookies,proxy="socks5://localhost:8091")
-    # await bot.ask(prompt="pepegas",conversation_style="creative")
 
 try:
-    # loop = asyncio.get_event_loop()
-    # loop.run_until_complete(main())
-    # app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
-    # loop.close()
     app.run_webhook(
         listen="0.0.0.0",
         port=9999,
@@ -472,9 +449,5 @@ try:
     )
 except NetworkError as e:
     pass
-    # time.sleep(10)
-    # asyncio.set_event_loop(asyncio.new_event_loop())
-    # app.run_polling(allowed_updates=Update.ALL_TYPES)
-    # loop.close()
 except Exception as e:
     logging.exception(e)
