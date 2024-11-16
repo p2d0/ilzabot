@@ -67,7 +67,8 @@ class Bot():
                     if json_data == "[DONE]":
                         break
                     response_data = json.loads(json_data)
-                    print(response_data)
+                    if 'choices' not in response_data or len(response_data['choices']) == 0:
+                        raise Exception(f"No choices in response data: {response_data}")
                     delta = response_data['choices'][0]['delta']
                     if "content" in delta:
                         message["content"] += delta["content"]
