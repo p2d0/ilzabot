@@ -460,16 +460,16 @@ async def main():
     # await bot.ask(prompt="pepegas",conversation_style="creative")
 
 try:
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
-    loop.close()
-    # app.run_webhook(
-    #     listen="0.0.0.0",
-    #     port=9999,
-    #     webhook_url='https://bots.upgradegamma.ru/'
-    #     # secret_token=''
-    # )
+    # loop = asyncio.get_event_loop()
+    # loop.run_until_complete(main())
+    # app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
+    # loop.close()
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=9999,
+        webhook_url='https://bots.upgradegamma.ru/'
+        # secret_token=''
+    )
 except NetworkError as e:
     pass
     # time.sleep(10)
