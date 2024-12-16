@@ -96,3 +96,5 @@ class Bot():
 
     def reset(self):
         self.messages = self._init_messages()
+        if os.path.exists("./cached_context.json"):
+            os.remove("./cached_context.json")
