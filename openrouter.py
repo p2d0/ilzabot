@@ -19,7 +19,7 @@ class Bot():
         try:
             with open("./cached_context.json", "r") as file:
                 cached_messages = json.load(file)
-                self.messages = cached_messages
+                self.messages = self._init_messages() + cached_messages
         except FileNotFoundError:
             self.messages = self._init_messages()
 
