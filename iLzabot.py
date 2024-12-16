@@ -36,6 +36,7 @@ import os
 from moviepy.editor import VideoFileClip, TextClip, CompositeVideoClip
 from db import setup_database, store_message, get_user_id_by_message_id
 from yt import download_random_short
+import atexit
 # from faces import facetrack_video
 
 load_dotenv()
@@ -129,6 +130,8 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await edgegpt(prompt,update);
 
 
+async def handle_add_to_chatbot_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    bot.add_context(f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.set_reaction("👌")
@@ -207,7 +210,8 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         return
     user_id = update.message.from_user.id
     current_time = time.time()
-
+    if not(any(name in text for name in ['ильза','ильзух'])):
+        await handle_add_to_chatbot_history(update,context)
     imagegen_count = text.count("/imagegen")
     if imagegen_count > 1:
         await update.message.reply_text("Много имагегенов в одном сообщении, УДАЛЯЮ")
@@ -436,12 +440,17 @@ async def main():
     print(os.environ.get('PATH'))
 
 try:
-    app.run_webhook(
-        listen="0.0.0.0",
-        port=9999,
-        webhook_url='https://bots.upgradegamma.ru/'
-        # secret_token=''
-    )
+    atexit.register(bot.cache_context)
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(main())
+    app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
+    loop.close()
+    # app.run_webhook(
+    #     listen="0.0.0.0",
+    #     port=9999,
+    #     webhook_url='https://bots.upgradegamma.ru/'
+    #     # secret_token=''
+    # )
 except NetworkError as e:
     pass
 except Exception as e:

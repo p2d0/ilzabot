@@ -13,12 +13,31 @@ class Bot():
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}",
         }
-        self.messages = self._init_messages()
+        self._import_context()
+
+    def _import_context(self):
+        try:
+            with open("./cached_context.json", "r") as file:
+                cached_messages = json.load(file)
+                self.messages = cached_messages
+        except FileNotFoundError:
+            self.messages = self._init_messages()
 
     def _init_messages(self):
         with open("./systemprompt.txt", "r") as file:
             system_content = file.read()
         return [{"role": "system", "content": system_content}]
+
+    def add_context(self, message):
+        self.messages.append({
+            "role": "user",
+            "content": message
+        });
+
+    def cache_context(self):
+        "function saves last 100 messages to a file"
+        with open("./cached_context.json", "w", encoding="utf-8") as file:
+            json.dump(self.messages[-1000:], file)
 
     def ask(self, text) -> str:
         self.messages.append({
