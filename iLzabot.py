@@ -441,16 +441,19 @@ async def main():
 
 try:
     atexit.register(bot.cache_context)
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
-    app.run_polling(allowed_updates=Update.ALL_TYPES,close_loop=False)
-    loop.close()
-    # app.run_webhook(
-    #     listen="0.0.0.0",
-    #     port=9999,
-    #     webhook_url='https://bots.upgradegamma.ru/'
-    #     # secret_token=''
-    # )
+    import os
+    if os.getenv("HOSTTYPE") == "armv7l":
+        app.run_webhook(
+            listen="0.0.0.0",
+            port=9999,
+            webhook_url='https://bots.upgradegamma.ru/'
+            # secret_token=''
+        )
+    else:
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(main())
+        app.run_polling(allowed_updates=Update.ALL_TYPES, close_loop=False)
+        loop.close()
 except NetworkError as e:
     pass
 except Exception as e:
