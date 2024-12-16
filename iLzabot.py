@@ -136,7 +136,7 @@ async def handle_add_to_chatbot_history(update: Update, context: ContextTypes.DE
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.set_reaction("👌")
     reply_text = ""
-    if update.message.reply_to_message:
+    if update.message.reply_to_message and update.message.from_user.username != iLza_bot:
         reply_text = f"Сообщение от пользователя {update.message.reply_to_message.from_user.first_name} @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
     try:
         stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
