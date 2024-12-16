@@ -37,7 +37,7 @@ class Bot():
     def cache_context(self):
         "function saves last 100 messages to a file"
         with open("./cached_context.json", "w", encoding="utf-8") as file:
-            json.dump(self.messages[-1000:], file)
+            json.dump(self.messages[-1000:][1:], file)
 
     def ask(self, text) -> str:
         self.messages.append({
