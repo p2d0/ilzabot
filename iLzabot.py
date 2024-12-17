@@ -138,6 +138,7 @@ async def handle_add_to_chatbot_history(update: Update, context: ContextTypes.DE
 async def handle_chatbot_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     file = await update.message.photo[-1].get_file()
     iobufferedbase = io.BytesIO()
+    await file.download_to_drive("./photo.jpeg");
     await file.download_to_memory(iobufferedbase)
     iobufferedbase.seek(0)
     base64_encoded = base64.b64encode(iobufferedbase.read()).decode('utf-8')
