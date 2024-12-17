@@ -28,6 +28,37 @@ class Bot():
             system_content = file.read()
         return [{"role": "system", "content": system_content}]
 
+    def ask_image(self, base64_image, caption=None):
+        image_msg = {
+                "role": "user",
+                "content": [{
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{base64_image}"
+                    }
+                }]
+            }
+        if caption:
+            caption_msg = {
+                "role": "user",
+                "content": caption
+            }
+            self.messages.append(caption_msg)
+            image_msg["content"].append(caption_msg)
+        payload = {
+            "model": "google/gemini-flash-1.5",
+            "messages": self.messages + [image_msg]
+        }
+        response = requests.post(self.api_endpoint, json=payload, headers=self.headers)
+        if response.status_code == 200:
+            response_data = response.json()
+            print(response_data)
+            answer = response_data['choices'][0]['message']
+            self.messages.append(answer)
+            return answer["content"]
+        else:
+            raise Exception(response)
+
     def add_context(self, message):
         self.messages.append({
             "role": "user",
@@ -92,7 +123,7 @@ class Bot():
                     if "content" in delta:
                         message["content"] += delta["content"]
                         yield {"token": delta["content"]}
-        self.messages.append(message)
+                        self.messages.append(message)
 
     def reset(self):
         self.messages = self._init_messages()

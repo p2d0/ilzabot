@@ -38,6 +38,8 @@ from db import setup_database, store_message, get_user_id_by_message_id
 from yt import download_random_short
 import atexit
 # from faces import facetrack_video
+import io
+import base64
 
 load_dotenv()
 
@@ -132,6 +134,16 @@ async def handle_edgegpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def handle_add_to_chatbot_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     bot.add_context(f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
+
+async def handle_chatbot_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    file = await update.message.photo[-1].get_file()
+    iobufferedbase = io.BytesIO()
+    await file.download_to_memory(iobufferedbase)
+    iobufferedbase.seek(0)
+    base64_encoded = base64.b64encode(iobufferedbase.read()).decode('utf-8')
+    caption = update.message.caption if update.message.caption else None
+    response_text = bot.ask_image(base64_encoded, caption)
+    await update.message.reply_text(response_text, parse_mode=ParseMode.HTML)
 
 async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.set_reaction("👌")
@@ -429,6 +441,7 @@ app.add_handler(CommandHandler("leaderboards", leaderboards))
 app.add_handler(CommandHandler("hello", hello))
 app.add_handler(CommandHandler("newchat", newchat))
 app.add_handler(CommandHandler('add_text', add_text))
+app.add_handler(MessageHandler(filters.PHOTO,handle_chatbot_photo))
 app.add_handler(MessageHandler(filters.TEXT & filters.Entity('mention') & filters.Regex('@iLza_bot'),handle_chatbot))
 app.add_handler(MessageHandler(filters.TEXT,post_msg))
 app.add_handler(CallbackQueryHandler(button_click))
