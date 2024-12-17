@@ -52,7 +52,6 @@ class Bot():
         response = requests.post(self.api_endpoint, json=payload, headers=self.headers)
         if response.status_code == 200:
             response_data = response.json()
-            print(response_data)
             answer = response_data['choices'][0]['message']
             self.messages.append(answer)
             return answer["content"]
@@ -82,7 +81,6 @@ class Bot():
         response = requests.post(self.api_endpoint, json=payload, headers=self.headers)
         if response.status_code == 200:
             response_data = response.json()
-            print(response_data)
             answer = response_data['choices'][0]['message']
             self.messages.append(answer)
             return answer["content"]

@@ -152,25 +152,31 @@ async def handle_chatbot(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     if update.message.reply_to_message and update.message.reply_to_message.from_user.username != "iLza_bot":
         reply_text = f"Сообщение от пользователя {update.message.reply_to_message.from_user.first_name} @{update.message.reply_to_message.from_user.username}: '{update.message.reply_to_message.text}'\n"
     try:
-        stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
+        await update.message.reply_text(bot.ask(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'"),parse_mode=ParseMode.HTML)
     except Exception as e:
         logging.exception(e)
         await update.message.set_reaction("😢")
         return;
+    # try:
+    #     stream = bot.ask_stream(reply_text + f"Сообщение от пользователя {update.message.from_user.first_name} {update.message.from_user.username}: '{update.message.text}'")
+    # except Exception as e:
+    #     logging.exception(e)
+    #     await update.message.set_reaction("😢")
+    #     return;
 
-    message = None
-    every_30_messages = 0
-    response_text = ""
-    for response in stream:
-        if response:
-            response_text += response['token']
-            every_30_messages += 1
-        if not message:
-            message = await update.message.reply_text(response_text, parse_mode=ParseMode.HTML)
-        elif every_30_messages % 30 == 0:
-            await message.edit_text(response_text, parse_mode=ParseMode.HTML)
-    if message:
-        await message.edit_text(response_text, parse_mode=ParseMode.HTML)
+    # message = None
+    # every_30_messages = 0
+    # response_text = ""
+    # for response in stream:
+    #     if response:
+    #         response_text += response['token']
+    #         every_30_messages += 1
+    #     if not message:
+    #         message = await update.message.reply_text(response_text, parse_mode=ParseMode.HTML)
+    #     elif every_30_messages % 30 == 0:
+    #         await message.edit_text(response_text, parse_mode=ParseMode.HTML)
+    # if message:
+    #     await message.edit_text(response_text, parse_mode=ParseMode.HTML)
 
 
     # if "нет" in response_text.lower():
