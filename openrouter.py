@@ -19,14 +19,32 @@ class Bot():
         try:
             with open("./cached_context.json", "r") as file:
                 cached_messages = json.load(file)
-                self.messages =   self._init_messages() + cached_messages
+                self.messages =   self._init_systemprompt() + cached_messages
         except FileNotFoundError:
-            self.messages = self._init_messages()
+            self.messages = self._init_systemprompt()
 
-    def _init_messages(self):
+    def _init_systemprompt(self):
         with open("./systemprompt.txt", "r") as file:
             system_content = file.read()
         return [{"role": "system", "content": system_content}]
+
+    def summarize_context(self):
+        if len(self.messages) > 100:
+            summary_prompt = "Суммируй следующий контекст в 1000 слов:\n"
+            context = "\n".join([msg["content"] for msg in self.messages[1:]])
+            summary_prompt += context
+            summary_payload = {
+                "model": "google/gemini-flash-1.5",
+                "messages": self._init_systemprompt() + [{"role": "user", "content": summary_prompt}]
+            }
+            summary_response = requests.post(self.api_endpoint, json=summary_payload, headers=self.headers)
+            if summary_response.status_code == 200:
+                summary_data = summary_response.json()
+                summary = summary_data['choices'][0]['message']['content']
+                print(summary)
+                self.messages = [self.messages[0], {"role": "system", "content": summary}]
+            else:
+                raise Exception(summary_response)
 
     def ask_image(self, base64_image, caption=None):
         image_msg = {
@@ -70,6 +88,8 @@ class Bot():
             json.dump(self.messages[-1000:][1:], file)
 
     def ask(self, text) -> str:
+        if len(self.messages) > 100:
+            self.summarize_context()
         self.messages.append({
             "role": "user",
             "content": text
@@ -124,6 +144,6 @@ class Bot():
                         self.messages.append(message)
 
     def reset(self):
-        self.messages = self._init_messages()
+        self.messages = self._init_systemprompt()
         if os.path.exists("./cached_context.json"):
             os.remove("./cached_context.json")
