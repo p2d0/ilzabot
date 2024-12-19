@@ -335,7 +335,7 @@ async def post_msg(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         # Download the video using yt-dlp
         try:
             proxy = 'http://localhost:8092' if 'reddit.com/' not in match.group(0) else None
-            with yt_dlp.YoutubeDL({'outtmpl': 'video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<10M]+ba[ext=m4a]/b[ext=mp4][filesize<10M] / bv*+ba/b", 'cookiefile': './instacookie',
+            with yt_dlp.YoutubeDL({'outtmpl': 'videos/video.%(ext)s',"overwrites": True,"format":"bv*[ext=mp4][filesize<10M]+ba[ext=m4a]/b[ext=mp4][filesize<10M] / bv*+ba/b", 'cookiefile': './instacookie',
                                 'proxy': proxy,
                                 'postprocessors': [{
                                     "key": "FFmpegVideoRemuxer",
