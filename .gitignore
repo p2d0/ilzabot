@@ -1,5 +1,4 @@
-/__pycache__/
-/ilzabot/
+__pycache__
 *.mp4
 *.mp3
 *.webm
@@ -10,3 +9,12 @@
 # !zen1.mp4
 # !fight1.mp4
 .env
+/cached_context*.json
+.txt
+*.rej
+*.log
+*.db
+*.ttml
+*.gif
+.venv
+.direnv
