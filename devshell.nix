@@ -14,16 +14,16 @@ Entered Ilzabot app development environment.
     #   name = "ANDROID_HOME";
     #   value = "android-sdk/share/android-sdk";
     # }
-    {
-      name = "LD_LIBRARY_PATH";
-      prefix = lib.makeLibraryPath [
-        stdenv.cc.cc
-        pkgs.glib
-        pkgs.libglvnd
-        pkgs.zlib
-        pkgs.dlib
-      ];
-    }
+    # {
+    #   name = "LD_LIBRARY_PATH";
+    #   prefix = lib.makeLibraryPath [
+    #     stdenv.cc.cc
+    #     pkgs.glib
+    #     pkgs.libglvnd
+    #     pkgs.zlib
+    #     pkgs.dlib
+    #   ];
+    # }
   ];
 
 
