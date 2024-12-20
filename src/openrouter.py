@@ -29,7 +29,7 @@ class Bot():
         return [{"role": "system", "content": system_content}]
 
     def summarize_context(self):
-        if len(self.messages) > 200:
+        if len(self.messages) > 150:
             summary_prompt = "Суммируй следующий контекст в 3000 слов ГЛАВНОЕ ДЕТАЛИ!:\n"
             context = "\n".join([msg["content"] for msg in self.messages[1:]])
             summary_prompt += context
