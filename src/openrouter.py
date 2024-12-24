@@ -47,22 +47,22 @@ class Bot():
                 raise Exception(summary_response)
 
     def ask_image(self, base64_image, caption=None):
+        caption_msg = {
+            "role": "user",
+            "content": caption
+        }
         image_msg = {
                 "role": "user",
-                "content": [{
+                "content": [
+                    caption_msg,
+                    {
                     "type": "image_url",
                     "image_url": {
                         "url": f"data:image/jpeg;base64,{base64_image}"
                     }
                 }]
             }
-        if caption:
-            caption_msg = {
-                "role": "user",
-                "content": caption
-            }
-            self.messages.append(caption_msg)
-            image_msg["content"].append(caption_msg)
+        self.messages.append(caption_msg)
         payload = {
             "model": "google/gemini-flash-1.5",
             "messages": self.messages + [image_msg]

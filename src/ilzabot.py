@@ -135,12 +135,12 @@ async def handle_chatbot_photo(update: Update, context: ContextTypes.DEFAULT_TYP
     iobufferedbase.seek(0)
     base64_encoded = base64.b64encode(iobufferedbase.read()).decode('utf-8')
     caption = (
-        f"Фото от пользователя {update.message.from_user.first_name} "
+        f"Следующее фото отправлено пользователем {update.message.from_user.first_name} "
         f"{update.message.from_user.username} Сообщение к фото: "
         f"'{update.message.caption}'"
     ) if update.message.caption else (
-        f"Фото от пользователя {update.message.from_user.first_name} "
-        f"{update.message.from_user.username}"
+        f"Следующее фото отправлено пользователем {update.message.from_user.first_name} "
+        f"{update.message.from_user.username}:"
     )
     response_text = bot.ask_image(base64_encoded, caption)
     await update.message.reply_text(response_text, parse_mode=ParseMode.HTML)
